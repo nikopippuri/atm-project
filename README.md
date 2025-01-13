@@ -2,4 +2,4 @@
 
 Er-kaavio
 
-<img src="er-kaavio.png">
+<img src="er_kaavio.png">
