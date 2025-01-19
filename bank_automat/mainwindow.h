@@ -1,6 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -19,17 +22,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QNetworkAccessManager *postManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
 
 private slots:
-    void on_btn0_clicked();
-    void on_btn1_clicked();
-    void on_btn2_clicked();
-    void on_btn3_clicked();
-    void on_btn4_clicked();
-    void on_btn5_clicked();
-    void on_btn6_clicked();
-    void on_btn7_clicked();
-    void on_btn8_clicked();
-    void on_btn9_clicked();
+    void on_btnStart_clicked();
 };
 #endif // MAINWINDOW_H
