@@ -21,7 +21,7 @@ router.get('/:id',
             if (err) {
                 response.json(err);
             } else {
-                response.json(result[0]);
+                response.json(result);
             }
         })
     });

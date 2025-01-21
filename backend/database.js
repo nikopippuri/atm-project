@@ -1,8 +1,8 @@
+const dotenv=require('dotenv')
 const mysql = require('mysql2');
-const connection = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'test',
-  database: 'yksinkertainen_pankki'
-});
-module.exports = connection;
+
+dotenv.config();
+
+const connection = mysql.createPool(process.env.SQL_SERVER);
+
+module.exports=connection;
