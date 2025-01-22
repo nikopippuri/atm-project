@@ -1,2 +1,2 @@
-CREATE USER peppiuser@'localhost' IDENTIFIED BY 'peppipass';
-GRANT ALL ON bank_automat.* TO peppiuser@'localhost';
+CREATE USER 'jamo'@'localhost' IDENTIFIED BY '1234';
+GRANT ALL ON yksinkertainen_pankki.* TO 'jamo'@'localhost';

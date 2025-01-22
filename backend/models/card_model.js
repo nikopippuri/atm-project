@@ -10,13 +10,13 @@ getById:function(id,callback){
 },
 add:function(card_data,callback){
     bcrypt.hash(card_data.pin, 10,function(err, hashed_pin){
-return db.query('INSERT INTO card(card_id,pin,debit_limit,type,locked,try_left)VALUES(?,?,?,?,?,?)',[card_data.card_id,hashed_pin,card_data.debit_limit,card_data.type,card_data.locked,card_data.try_left],callback);
+return db.query('INSERT INTO card(card_id,pin,locked,try_left,account_id)VALUES(?,?,?,?,?)',[card_data.card_id,hashed_pin,card_data.locked,card_data.try_left,card_data.account_id],callback);
     })
 
 },
 update:function(upd,card_data,callback){
     bcrypt.hash(card_data.pin,10,function(err,hashed_pin){
-        return db.query('UPDATE card SET pin=?,debit_limit=?,type=?,locked=?,try_left=? WHERE card_id=?',[hashed_pin,card_data.debit_limit,card_data.type,card_data.locked,card_data.try_left,upd],callback);
+        return db.query('UPDATE card SET pin=?,locked=?,try_left=? WHERE card_id=?',[hashed_pin,card_data.locked,card_data.try_left,upd],callback);
     })
 },
 delete:function(del,callback){
