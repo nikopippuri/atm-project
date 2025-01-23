@@ -9,10 +9,15 @@ var loginRouter = require('./routes/login');
 var transactionRouter = require('./routes/transactions');
 const jwt = require('jsonwebtoken');
 
-var app = express();
+
+
+const app = express();
+app.use(express.json());
+
+const withdrawRouter = require('./routes/withdraw');
+app.use('/api', withdrawRouter);
 
 app.use(logger('dev'));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,5 +44,7 @@ function authenticateToken(req, res, next) {
       next()
     })
   }
+
+
 
 module.exports = app;
