@@ -1,3 +1,4 @@
+#include "dashboard.h"
 #include "enviroment.h"
 #include "login.h"
 #include "ui_login.h"
@@ -43,30 +44,38 @@ void Login::on_btnLogin_2_clicked()
 
 void Login::LoginSlot(QNetworkReply *reply)
 {
-    response_data=reply->readAll();
-    if(response_data.length()<2){
-        qDebug()<<"Palvelin ei vastaa";
+    response_data = reply->readAll();
+    qDebug() << response_data;
+
+    if (response_data.length() < 2) {
+        qDebug() << "Palvelin ei vastaa";
         ui->labelInfo->setText("Palvelin ei vastaa!");
-    }
-    else{
-        if(response_data=="-11"){
-            ui->labelInfo->setText("Tietokanta virhe!");
-        }
-        else{
-            if(response_data!="False" && response_data.length()>20){
-                ui->labelInfo->setText("kirjautuminen onnistui!");
-            }
-            else{
-                qDebug()<<response_data;
+    } else {
+        if (response_data == "-11") {
+            ui->labelInfo->setText("Tietokantavirhe!");
+        } else {
+            if (response_data != "False" && response_data.length() > 20) {
+                ui->labelInfo->setText("Kirjautuminen onnistui!");
+
+                QString auth_token = response_data; // Auth-token vastauksesta
+                QString card_id = ui->LeUserId->text();
+
+                // Avaa uusi Dashboard-ikkuna
+                Dashboard *dashboard = new Dashboard(card_id, auth_token);
+                dashboard->show();
+
+                // Sulje kirjautumisikkuna
+               //  this->close();
+            } else {
+                qDebug() << response_data;
                 ui->labelInfo->setText("Väärä ID tai PIN!");
             }
-
         }
-
     }
     reply->deleteLater();
     postManager->deleteLater();
 }
+
 
 void Login::on_btn0_clicked()
 {

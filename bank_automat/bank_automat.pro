@@ -10,17 +10,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    dashboard.cpp \
     enviroment.cpp \
     login.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    dashboard.h \
     enviroment.h \
     login.h \
     mainwindow.h
 
 FORMS += \
+    dashboard.ui \
     login.ui \
     mainwindow.ui
 
