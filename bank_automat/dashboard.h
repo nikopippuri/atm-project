@@ -12,7 +12,7 @@ class Dashboard : public QWidget
     Q_OBJECT
 
 public:
-    explicit Dashboard(QString user_name, QString auth_token, QWidget *parent = nullptr);
+    explicit Dashboard(QString card_id, QString auth_token, QWidget *parent = nullptr);
     ~Dashboard();
 
 private slots:
