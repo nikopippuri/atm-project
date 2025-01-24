@@ -1,3 +1,4 @@
+#include "enviroment.h"
 #include "login.h"
 #include "ui_login.h"
 
@@ -17,6 +18,7 @@ Login::Login(QWidget *parent)
     connect(ui->btn7,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn8,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn9,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
+
 }
 
 Login::~Login()
@@ -30,7 +32,7 @@ void Login::on_btnLogin_2_clicked()
     jsonObj.insert("card_id",ui->LeUserId->text());
     jsonObj.insert("pin",ui->LeUserPin->text());
 
-    QString site_url="http://localhost:3000/Login";
+    QString site_url=Enviroment::base_url()+"/login";
     QNetworkRequest request(site_url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     postManager = new QNetworkAccessManager(this);
@@ -42,7 +44,26 @@ void Login::on_btnLogin_2_clicked()
 void Login::LoginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
-    qDebug()<<response_data;
+    if(response_data.length()<2){
+        qDebug()<<"Palvelin ei vastaa";
+        ui->labelInfo->setText("Palvelin ei vastaa!");
+    }
+    else{
+        if(response_data=="-11"){
+            ui->labelInfo->setText("Tietokanta virhe!");
+        }
+        else{
+            if(response_data!="False" && response_data.length()>20){
+                ui->labelInfo->setText("kirjautuminen onnistui!");
+            }
+            else{
+                qDebug()<<response_data;
+                ui->labelInfo->setText("Väärä ID tai PIN!");
+            }
+
+        }
+
+    }
     reply->deleteLater();
     postManager->deleteLater();
 }
@@ -50,23 +71,50 @@ void Login::LoginSlot(QNetworkReply *reply)
 void Login::on_btn0_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "0";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "0";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "0";
+        ui->LeUserPin->setText(pinText);
+    }
 }
 
 void Login::on_btn1_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "1";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "1";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "1";
+        ui->LeUserPin->setText(pinText);
+    }
 }
 
 
 void Login::on_btn2_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "2";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "2";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "2";
+        ui->LeUserPin->setText(pinText);
+    }
 }
 
 
@@ -74,55 +122,137 @@ void Login::on_btn2_clicked()
 void Login::on_btn3_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "3";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "3";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "3";
+        ui->LeUserPin->setText(pinText);
+    }
 }
 
 
 void Login::on_btn4_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "4";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "4";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "4";
+        ui->LeUserPin->setText(pinText);
+    }
 }
 
 
 void Login::on_btn5_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "5";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "5";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "5";
+        ui->LeUserPin->setText(pinText);
+    }
+
 }
 
 
 void Login::on_btn6_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "6";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "6";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "6";
+        ui->LeUserPin->setText(pinText);
+    }
 }
 
 
 void Login::on_btn7_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "7";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "7";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "7";
+        ui->LeUserPin->setText(pinText);
+
+}
 }
 
 
 void Login::on_btn8_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "8";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "8";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "8";
+        ui->LeUserPin->setText(pinText);
+    }
 }
 
 
 void Login::on_btn9_clicked()
 {
     QString currentText = ui->LeUserId->text();
-    currentText += "9";
-    ui->LeUserId->setText(currentText);
+    if (currentText.length() < 1) {
+        currentText += "9";
+        ui->LeUserId->setText(currentText);
+
+        ui->LeUserPin->setFocus();
+    }
+    else {
+        QString pinText = ui->LeUserPin->text();
+        pinText += "9";
+        ui->LeUserPin->setText(pinText);
+    }
 }
+
+void Login::on_btnClear_clicked()
+{
+    QString pinText = ui->LeUserPin->text();
+    if (!pinText.isEmpty()) {
+        pinText.chop(1);
+        ui->LeUserPin->setText(pinText);
+    }
+    else {
+        QString userIdText = ui->LeUserId->text();
+        if (!userIdText.isEmpty()) {
+            userIdText.chop(1);
+            ui->LeUserId->setText(userIdText);
+    }
+}
+}
+
 

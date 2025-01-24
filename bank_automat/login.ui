@@ -508,6 +508,28 @@ color: rgb(0, 0, 0);</string>
     <string>5</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelInfo">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>340</y>
+     <width>471</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
   <zorder>label_2</zorder>
   <zorder>btnArrow5</zorder>
   <zorder>LeUserId</zorder>
@@ -534,6 +556,7 @@ color: rgb(0, 0, 0);</string>
   <zorder>btnArrow3</zorder>
   <zorder>btnStop</zorder>
   <zorder>btn5</zorder>
+  <zorder>labelInfo</zorder>
  </widget>
  <resources/>
  <connections/>

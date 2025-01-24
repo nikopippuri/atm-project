@@ -25,6 +25,7 @@ private:
     QByteArray response_data;
 
 private slots:
+    void on_btnClear_clicked();
     void on_btnLogin_2_clicked();
     void LoginSlot (QNetworkReply *reply);
     void on_btn0_clicked();
