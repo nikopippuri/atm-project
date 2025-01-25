@@ -1,5 +1,6 @@
 #include "enviroment.h"
 #include "login.h"
+#include "paaikkuna.h"
 #include "ui_login.h"
 
 Login::Login(QWidget *parent)
@@ -55,6 +56,11 @@ void Login::LoginSlot(QNetworkReply *reply)
         else{
             if(response_data!="False" && response_data.length()>20){
                 ui->labelInfo->setText("kirjautuminen onnistui!");
+                QByteArray myToken="Bearer "+response_data;
+                paaikkuna *objpaaikkuna=new paaikkuna(this);
+                objpaaikkuna->setCard_id(ui->LeUserId->text());
+                objpaaikkuna->setMyToken(myToken);
+                objpaaikkuna->open();
             }
             else{
                 qDebug()<<response_data;
