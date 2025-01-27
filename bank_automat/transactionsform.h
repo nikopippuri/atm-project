@@ -21,6 +21,8 @@ private slots:
     void fetchTransactions(); // Hakee tapahtumat
     void onTransactionsFetched(QNetworkReply *reply); // Muokkaa tapahtumia
 
+    void on_btnStop_clicked();
+
 private:
     Ui::TransactionsForm *ui;
     QByteArray myToken; // Tokeni

@@ -78,3 +78,9 @@ void TransactionsForm::onTransactionsFetched(QNetworkReply *reply)
 
     reply->deleteLater();
 }
+
+void TransactionsForm::on_btnStop_clicked()
+{
+    this->close();
+}
+

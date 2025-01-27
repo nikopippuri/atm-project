@@ -23,6 +23,29 @@
     </rect>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnStop">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>400</y>
+     <width>71</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 0, 0);
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>STOP</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
