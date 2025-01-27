@@ -2,6 +2,7 @@
 #define PAAIKKUNA_H
 
 #include <QDialog>
+#include "transactionsform.h"
 
 namespace Ui {
 class paaikkuna;
@@ -20,6 +21,9 @@ public:
     void setCard_id(const QString &newCard_id);
 
     void setMyToken(const QByteArray &newMyToken);
+
+private slots:
+    void on_btnFetchTransactions_clicked();
 
 private:
     Ui::paaikkuna *ui;

@@ -25,3 +25,14 @@ void paaikkuna::setMyToken(const QByteArray &newMyToken)
     qDebug()<<"paaikkuna";
     qDebug()<<myToken;
 }
+
+void paaikkuna::on_btnFetchTransactions_clicked()
+{
+    qDebug()<<card_id;
+    qDebug()<<myToken;
+
+    // Luo uusi tapahtumat -ikkuna
+    TransactionsForm *transactionsForm = new TransactionsForm(card_id, myToken, this);
+    transactionsForm->show(); // Näytä lomake
+}
+

@@ -6,6 +6,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var cardRouter = require('./routes/card');
 var loginRouter = require('./routes/login');
+var transactionRouter = require('./routes/transactions');
 const jwt = require('jsonwebtoken');
 
 var app = express();
@@ -20,6 +21,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use(authenticateToken);
 app.use('/card', cardRouter);
+app.use('/transactions', transactionRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']

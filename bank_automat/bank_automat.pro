@@ -14,18 +14,21 @@ SOURCES += \
     login.cpp \
     main.cpp \
     mainwindow.cpp \
-    paaikkuna.cpp
+    paaikkuna.cpp \
+    transactionsform.cpp
 
 HEADERS += \
     enviroment.h \
     login.h \
     mainwindow.h \
-    paaikkuna.h
+    paaikkuna.h \
+    transactionsform.h
 
 FORMS += \
     login.ui \
     mainwindow.ui \
-    paaikkuna.ui
+    paaikkuna.ui \
+    transactionsform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
