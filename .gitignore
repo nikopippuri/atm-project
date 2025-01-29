@@ -1,3 +1,5 @@
 backend/node_modules/ 
 bank_automat/build/ 
 bank_automat/*.user 
+backend/.env
+

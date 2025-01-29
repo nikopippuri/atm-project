@@ -1,6 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -19,5 +22,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QNetworkAccessManager *postManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
+
+private slots:
+    void on_btnStart_clicked();
 };
 #endif // MAINWINDOW_H

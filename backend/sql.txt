@@ -1,0 +1,2 @@
+CREATE USER 'jamo'@'localhost' IDENTIFIED BY '1234';
+GRANT ALL ON yksinkertainen_pankki.* TO 'jamo'@'localhost';
