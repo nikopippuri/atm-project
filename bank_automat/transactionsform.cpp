@@ -47,40 +47,69 @@ void TransactionsForm::onTransactionsFetched(QNetworkReply *reply)
         return;
     }
 
-    // Parsitaan JSON-vastaus
     QByteArray response = reply->readAll();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(response);
+    reply->deleteLater();
 
-    if (jsonDoc.isArray()) {
-        QJsonArray transactions = jsonDoc.array();
-
-        for (const QJsonValue &value : transactions) {
-            QJsonObject obj = value.toObject();
-            qDebug() << "Objekti:" << obj; // Tulostaa koko objektin
-
-        }
-
-        for (const QJsonValue &value : transactions) {
-            QJsonObject obj = value.toObject();
-            QString formattedText = QString(
-                                            "Summa: %3 euroa.\n "
-                                            "Päivämäärä: %1")
-                                        .arg(obj["timestamp"].toString().replace("T", " ").replace("Z", ""))
-                                        .arg(obj["sum"].toString());
-
-            // Lisää muotoiltu teksti listaan
-            ui->listWidgetTransactions->addItem(formattedText);
-
-        }
-    } else {
+    if (!jsonDoc.isArray()) {
         QMessageBox::critical(this, "Virhe", "Virheellinen palvelinvastaus.");
+        return;
     }
 
-    reply->deleteLater();
+    // Tallennetaan kaikki tapahtumat muuttujaan
+    allTransactions.clear();
+    for (const QJsonValue &value : jsonDoc.array()) {
+        allTransactions.append(value.toObject());
+    }
+
+    // Aloitetaan ensimmäiseltä sivulta
+    currentPage = 0;
+    updateTransactionList();
 }
 
 void TransactionsForm::on_btnStop_clicked()
 {
     this->close();
+}
+
+void TransactionsForm::updateTransactionList()
+{
+    ui->listWidgetTransactions->clear(); // Tyhjennetään lista ennen päivitystä
+
+    int startIdx = currentPage * itemsPerPage;
+    int endIdx = qMin(startIdx + itemsPerPage, allTransactions.size());
+
+    for (int i = startIdx; i < endIdx; ++i) {
+        QJsonObject obj = allTransactions[i];
+
+        QString timestamp = obj["timestamp"].toString().left(10);
+
+        QString formattedText = QString(
+                                    "Summa: %1 euroa.\nPäivämäärä: %2")
+                                    .arg(obj["sum"].toString())
+                                    .arg(timestamp); // Käytetään muokattua päivämäärää
+
+        ui->listWidgetTransactions->addItem(formattedText);
+    }
+
+    // Päivitetään napit (estetään siirtyminen mahdottomiin suuntiin)
+    ui->btnNext->setEnabled(endIdx < allTransactions.size());
+    ui->btnPrevious->setEnabled(currentPage > 0);
+}
+
+void TransactionsForm::on_btnNext_clicked()
+{
+    if ((currentPage + 1) * itemsPerPage < allTransactions.size()) {
+        currentPage++;
+        updateTransactionList();
+    }
+}
+
+void TransactionsForm::on_btnPrevious_clicked()
+{
+    if (currentPage > 0) {
+        currentPage--;
+        updateTransactionList();
+    }
 }
 

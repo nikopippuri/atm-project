@@ -23,11 +23,21 @@ private slots:
 
     void on_btnStop_clicked();
 
+    void on_btnNext_clicked();
+
+    void on_btnPrevious_clicked();
+
 private:
     Ui::TransactionsForm *ui;
     QByteArray myToken; // Tokeni
     QString accountId; // Account
     QNetworkAccessManager *networkManager;
+
+    QVector<QJsonObject> allTransactions; // Kaikki haetut tapahtumat
+    int currentPage = 0; // Nykyinen sivu
+    const int itemsPerPage = 7; // Montako tapahtumaa näytetään per sivu
+
+    void updateTransactionList();
 };
 
 #endif // TRANSACTIONSFORM_H
