@@ -9,6 +9,14 @@ Login::Login(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Aikakatkaisuun tarvittavat
+
+    timeoutTimer = new QTimer(this);
+    timeoutTimer->setSingleShot(true);
+    connect(timeoutTimer, &QTimer::timeout, this, &Login::onTimeout);
+
+    timeoutTimer->start(10000); // 10 sekuntia
+
     connect(ui->btn0,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn1,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn2,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
@@ -56,6 +64,10 @@ void Login::LoginSlot(QNetworkReply *reply)
         else{
             if(response_data!="False" && response_data.length()>20){
                 ui->labelInfo->setText("kirjautuminen onnistui!");
+
+
+                timeoutTimer->stop();   // 🔹 Poistetaan aikakatkaisun timeri käytöstä
+
                 QByteArray myToken="Bearer "+response_data;
                 paaikkuna *objpaaikkuna=new paaikkuna(this);
                 objpaaikkuna->setCard_id(ui->LeUserId->text());
@@ -88,6 +100,8 @@ void Login::on_btn0_clicked()
         pinText += "0";
         ui->LeUserPin->setText(pinText);
     }
+
+    timeoutTimer->start(10000); // Aloitetaan ajastin alusta
 }
 
 void Login::on_btn1_clicked()
@@ -104,6 +118,8 @@ void Login::on_btn1_clicked()
         pinText += "1";
         ui->LeUserPin->setText(pinText);
     }
+
+    timeoutTimer->start(10000); // Aloitetaan ajastin alusta
 }
 
 
@@ -121,6 +137,8 @@ void Login::on_btn2_clicked()
         pinText += "2";
         ui->LeUserPin->setText(pinText);
     }
+
+    timeoutTimer->start(10000); // Aloitetaan ajastin alusta
 }
 
 
@@ -259,6 +277,12 @@ void Login::on_btnClear_clicked()
             ui->LeUserId->setText(userIdText);
     }
 }
+}
+
+void Login::onTimeout()
+{
+    ui->labelInfo->setText("Aikakatkaisu!");
+    QTimer::singleShot(2000, this, &QWidget::close); // Suljetaan ikkuna 2 sekunnin päästä
 }
 
 
