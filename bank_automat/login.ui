@@ -109,6 +109,12 @@ color: rgb(0, 0, 0);</string>
      <height>41</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>

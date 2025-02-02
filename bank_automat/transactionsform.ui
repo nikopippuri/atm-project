@@ -46,6 +46,38 @@ color: rgb(0, 0, 0);</string>
     <string>STOP</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnNext">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>350</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(180, 180, 180);</string>
+   </property>
+   <property name="text">
+    <string>Eteenpäin</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnPrevious">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>350</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(180, 180, 180);</string>
+   </property>
+   <property name="text">
+    <string>Takaisin</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
