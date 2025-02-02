@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include <QTimer> // Aikakatkaisuun
 
 namespace Ui {
 class Login;
@@ -23,6 +24,7 @@ private:
     QNetworkAccessManager *postManager;
     QNetworkReply *reply;
     QByteArray response_data;
+    QTimer *timeoutTimer; // Aikakatkaisuun
 
 private slots:
     void on_btnClear_clicked();
@@ -38,6 +40,7 @@ private slots:
     void on_btn7_clicked();
     void on_btn8_clicked();
     void on_btn9_clicked();
+    void onTimeout(); // Aikakatkaisu funktio
 };
 
 #endif // LOGIN_H
