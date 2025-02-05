@@ -2,6 +2,8 @@
 #include "login.h"
 #include "paaikkuna.h"
 #include "ui_login.h"
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 Login::Login(QWidget *parent)
     : QDialog(parent)
@@ -16,6 +18,13 @@ Login::Login(QWidget *parent)
     connect(timeoutTimer, &QTimer::timeout, this, &Login::onTimeout);
 
     timeoutTimer->start(10000); // 10 sekuntia
+
+    setMouseTracking(true); // Hiiren seuraaminen
+
+    installEventFilter(this); // Tarkkailee myös qline editin näppäimiä
+
+    ui->LeUserId->installEventFilter(this);
+    ui->LeUserPin->installEventFilter(this);
 
     connect(ui->btn0,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn1,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
@@ -278,6 +287,19 @@ void Login::on_btnClear_clicked()
     }
 }
 }
+
+void Login::mouseMoveEvent(QMouseEvent *event) {
+    Q_UNUSED(event);  // 🔹 Estää käyttämättömän muuttujan varoituksen
+    timeoutTimer->start(10000);  // 🔹 Nollataan ajastin hiiren liikkeellä
+}
+
+bool Login::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::KeyPress) {
+        timeoutTimer->start(10000);  // 🔹 Nollataan ajastin näppäinpainalluksella
+    }
+    return QDialog::eventFilter(obj, event); // 🔹 Palautetaan tapahtuma normaalisti
+}
+
 
 void Login::onTimeout()
 {

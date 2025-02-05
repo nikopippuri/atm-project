@@ -6,6 +6,8 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer> // Aikakatkaisuun
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 namespace Ui {
 class Login;
@@ -41,6 +43,8 @@ private slots:
     void on_btn8_clicked();
     void on_btn9_clicked();
     void onTimeout(); // Aikakatkaisu funktio
+    void mouseMoveEvent(QMouseEvent *event); // Hiiren liikutus
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 
 #endif // LOGIN_H
