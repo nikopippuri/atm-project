@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QMessageBox>
+#include "enviroment.h"
 
 
 TransactionsForm::TransactionsForm(const QString &accountId, const QByteArray &myToken, QWidget *parent) :
@@ -27,7 +28,8 @@ TransactionsForm::~TransactionsForm()
 
 void TransactionsForm::fetchTransactions()
 {
-    QString url = QString("http://localhost:3000/transactions/%1").arg(accountId);
+
+    QString url = QString("%1/transactions/%2").arg(Enviroment::base_url()).arg(accountId);
     QNetworkRequest request((QUrl(url)));
 
     request.setRawHeader("Authorization", myToken); // Lisätään tokeni
