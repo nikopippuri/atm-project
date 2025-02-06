@@ -27,6 +27,8 @@ app.use('/login', loginRouter);
 app.use(authenticateToken);
 app.use('/card', cardRouter);
 app.use('/transactions', transactionRouter);
+const balanceRouter = require('./routes/balance');
+app.use(balanceRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
