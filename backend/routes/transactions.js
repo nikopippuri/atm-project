@@ -1,3 +1,79 @@
+/**
+ *@swagger
+ *components:
+ *  schemas:
+ *    transactions:
+ *      type: object
+ *      required:
+ *        - transaction_id
+ *        - sum
+ *        - timestamp
+ *        - account_id
+ *      properties:
+ *        transaction_id:
+ *          type: integer
+ *          description: The primary key of the card
+ *        sum:
+ *          type: integer
+ *          description: The sum of transaction
+ *        timestamp:
+ *          type: integer
+ *          description: When the transaction was made
+ *        account_id:
+ *          type: integer
+ *          description: ID of the account who made the transaction
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   - name: transactions
+ *     description: CRUD operations for transaction table.
+ */
+
+/** 
+ * @swagger
+ * /transactions:
+ *   get:
+ *     summary: Lists all transactions
+ *     tags:
+ *       - transactions
+ *     responses:
+ *       200:
+ *         description: Lists all transactions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/transactions'
+ */
+
+/** 
+ * @swagger
+ * /transactions:
+ *   post:
+ *     summary: Make a new transaction
+ *     tags:
+ *       - transactions
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/transactions'
+ *     responses:
+ *       200:
+ *         description: New transaction was made
+ *         content:
+ *           application/json:
+ *             schema:
+ *               items:
+ *                 $ref: '#/components/schemas/transactions'
+ */
+
+
+
 const express = require('express');
 const router = express.Router();
 const transactions = require('../models/transactions_model');
