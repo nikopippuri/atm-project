@@ -36,3 +36,10 @@ void paaikkuna::on_btnFetchTransactions_clicked()
     transactionsForm->show(); // Näytä lomake
 }
 
+
+void paaikkuna::on_btnwithdraw_clicked()
+{
+    withdrawalWindow = new withdrawal(this);
+    withdrawalWindow->show();
+}
+

@@ -453,7 +453,7 @@ color: rgb(0, 0, 0);</string>
     <string>2</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnArrow6">
+  <widget class="QPushButton" name="btnwithdraw">
    <property name="geometry">
     <rect>
      <x>640</x>
@@ -466,7 +466,7 @@ color: rgb(0, 0, 0);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string/>
+    <string>Nosto</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -513,7 +513,7 @@ color: rgb(0, 0, 0);</string>
   <zorder>btn4</zorder>
   <zorder>btn3</zorder>
   <zorder>btn2</zorder>
-  <zorder>btnArrow6</zorder>
+  <zorder>btnwithdraw</zorder>
   <zorder>labelUsername</zorder>
   <zorder>label</zorder>
  </widget>
