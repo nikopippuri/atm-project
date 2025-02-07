@@ -40,8 +40,8 @@
  * /card:
  *   get:
  *     summary: List of all the cards
- *     tags:
- *       - card
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: The list of all the cards
