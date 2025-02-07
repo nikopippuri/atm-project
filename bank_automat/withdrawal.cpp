@@ -48,33 +48,7 @@ void withdrawal::sendWithdrawalRequest(int amount)
 
     networkManager->post(request, data);
 }
-/*
-void withdrawal::onApiResponse(QNetworkReply *reply)
-{
-    if (reply->error() == QNetworkReply::NoError) {
 
-        QByteArray responseData = reply->readAll();
-
-
-
-        QJsonDocument jsonResponse = QJsonDocument::fromJson(responseData);
-        QJsonObject jsonObj = jsonResponse.object();
-
-
-        if (jsonObj.contains("message")) {
-            QString message = jsonObj["message"].toString();
-            ui->labelChosenSum->setText(message);
-        }
-    } else {
-
-        ui->labelChosenSum->setText("Virhe nostossa: " + reply->errorString());
-    }
-
-
-    reply->deleteLater();
-}
-
-*/
 
 void withdrawal::onApiResponse(QNetworkReply *reply)
 {
