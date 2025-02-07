@@ -293,6 +293,11 @@ void Login::mouseMoveEvent(QMouseEvent *event) {
     timeoutTimer->start(10000);  // 🔹 Nollataan ajastin hiiren liikkeellä
 }
 
+void Login::mouseMoveEvent(QMouseEvent *event) {
+    Q_UNUSED(event);  // 🔹 Estää käyttämättömän muuttujan varoituksen
+    timeoutTimer->start(10000);  // 🔹 Nollataan ajastin hiiren liikkeellä
+}
+
 bool Login::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::KeyPress) {
         timeoutTimer->start(10000);  // 🔹 Nollataan ajastin näppäinpainalluksella
