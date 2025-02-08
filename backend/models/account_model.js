@@ -11,7 +11,7 @@ const account = {
             }
 
             if (results && results[0] && results[0][0]) {
-                callback(null, results[0][0]); // Palauttaa { message: "Nosto onnistui" } tai muu viesti
+                callback(null, results[0][0]); 
             } else {
                 callback(null, { message: "Tuntematon virhe nostossa" });
             }
