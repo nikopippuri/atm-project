@@ -1,5 +1,7 @@
 // aja tämä omassa tietokannassa
-CREATE DEFINER=`root`@`localhost` PROCEDURE `withdrawal`(
+DELIMITER //
+
+ PROCEDURE `withdrawal`(
     IN p_account_id INT, 
     IN p_amount DECIMAL(10, 2)
 )
@@ -33,3 +35,4 @@ BEGIN
         SELECT 'Nosto onnistui' AS message, current_balance - p_amount AS new_balance;
     END IF;
     END
+DELIMITER ;
