@@ -1,7 +1,7 @@
 // aja tämä omassa tietokannassa
 DELIMITER //
 
- PROCEDURE `withdrawal`(
+ CREATE PROCEDURE `withdrawal`(
     IN p_account_id INT, 
     IN p_amount DECIMAL(10, 2)
 )
