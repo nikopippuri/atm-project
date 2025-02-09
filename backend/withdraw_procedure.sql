@@ -34,5 +34,5 @@ BEGIN
         
         SELECT 'Nosto onnistui' AS message, current_balance - p_amount AS new_balance;
     END IF;
-    END
+    END //
 DELIMITER ;

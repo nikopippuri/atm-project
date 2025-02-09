@@ -4,7 +4,7 @@ const account = {
     withdraw: function(account_id, amount, callback) {
         const query = 'CALL withdrawal(?, ?)';
 
-        db.query(query, [account_id, amount], function(err, results) {
+        db.query(query, [account_id, amount,], function(err, results) {
             if (err) {
                 console.error("Error during withdrawal:", err);
                 return callback(null, { message: err.sqlMessage || "Tuntematon virhe" });

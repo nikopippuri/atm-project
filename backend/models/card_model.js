@@ -23,9 +23,28 @@ delete:function(del,callback){
 return db.query('DELETE FROM card WHERE card_id=?',[del],callback);
 
 },
-checkPassword:function(card_id,callback){
-return db.query('SELECT pin FROM card WHERE card_id=?',[card_id],callback);
+checkPassword: function(card_id, callback) {
+    return db.query(`
+        SELECT c.pin, c.card_type, cu.fname, cu.lname 
+        FROM card c
+        JOIN customer cu ON c.customer_id = cu.customer_id
+        WHERE c.card_id = ?
+    `, [card_id], callback);
+},
+
+// päivittää yritysten määrän
+updateTryLeft: function (card_id, tries, callback) {
+    return db.query('UPDATE card SET try_left=? WHERE card_id=?', [tries, card_id], callback);
+},
+// lukitsee kortin
+lockCard: function (card_id, callback) {
+    return db.query('UPDATE card SET locked=1 WHERE card_id=?', [card_id], callback);
+},
+// onnistuneen kirjautumisen jälkeen nollaa käytetyt arvaukset
+resetTryLeft: function (card_id, callback) {
+    return db.query('UPDATE card SET try_left=3 WHERE card_id=?', [card_id], callback);
 }
 }
+
 
 module.exports=card;

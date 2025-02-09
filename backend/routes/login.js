@@ -20,8 +20,28 @@ router.post('/',
              bcrypt.compare(pass,dbResult[0].pin, function(err,compareResult) {
                 if(compareResult) {
                   console.log("success");
+
+                  console.log("dbResult:", dbResult[0]);
+
+                  const cardType = dbResult[0].card_type;
+                  let cardTypeInt = 1;  // Oletuksena debit
+  
+                  if (cardType === 'credit') {
+                    cardTypeInt = 2;
+                  } else if (cardType === 'combo') {
+                    cardTypeInt = 3;
+                    
+                  }
                   const token = generateAccessToken({ username: user });
-                  response.send(token);
+
+                  response.json({
+                    token: token,
+                    card_type: cardTypeInt,
+                    fname: dbResult[0].fname,
+                    lname: dbResult[0].lname,
+                                message: `Tervetuloa ${dbResult[0].fname} ${dbResult[0].lname}!`
+                  });
+
                 }
                 else {
                     console.log("wrong password");
