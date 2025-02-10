@@ -34,16 +34,25 @@ router.post('/',
                   }
                   const token = generateAccessToken({ username: user });
 
-                  response.json({
-                    token: token,
-                    card_type: cardTypeInt,
-                    fname: dbResult[0].fname,
-                    lname: dbResult[0].lname,
-                                message: `Tervetuloa ${dbResult[0].fname} ${dbResult[0].lname}!`
-                  });
+                card.getAccounts(user, function(accountError, accountResults) {
+                  if(accountError) {
+                    console.log("Error fetching accounts:", accountError);
+                    response.status(500).json({ message: 'Database error while fetching accounts' });
+                  } else {
+                    console.log("Accounts:", accountResults);
 
-                }
-                else {
+                    // 🔹 Palauta vastauksessa myös tilitiedot
+                    response.json({
+                      token: token,
+                      card_type: cardTypeInt,
+                      fname: dbResult[0].fname,
+                      lname: dbResult[0].lname,
+                      accounts: accountResults,  // Tässä palautetaan tilitiedot
+                      message: `Tervetuloa ${dbResult[0].fname} ${dbResult[0].lname}!`
+                    });
+                  }
+                });
+              }else {
                     console.log("wrong password");
                     response.send(false);
                 }			

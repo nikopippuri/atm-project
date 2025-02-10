@@ -1,4 +1,5 @@
 #include "paaikkuna.h"
+#include "qjsonobject.h"
 #include "ui_paaikkuna.h"
 
 paaikkuna::paaikkuna(QWidget *parent)
@@ -11,12 +12,6 @@ paaikkuna::paaikkuna(QWidget *parent)
 paaikkuna::~paaikkuna()
 {
     delete ui;
-}
-
-void paaikkuna::setCard_id(const QString &newCard_id)
-{
-    card_id = newCard_id;
-    ui->labelUsername->setText(card_id);
 }
 
 void paaikkuna::setMyToken(const QByteArray &newMyToken)
@@ -39,7 +34,32 @@ void paaikkuna::on_btnFetchTransactions_clicked()
 
 void paaikkuna::on_btnwithdraw_clicked()
 {
-    withdrawalWindow = new withdrawal(this);
-    withdrawalWindow->show();
+    withdrawal *withdrawalWindow = new withdrawal(this);
+
+    // Oletetaan, että käyttäjällä on vain yksi tili (debit tai credit)
+    if (accounts.size() == 1) {
+        QJsonObject account = accounts[0].toObject();
+        int accountId = account["account_id"].toInt();  // Otetaan tilin ID
+        withdrawalWindow->setAccount(accountId);        // Välitetään nostoon
+    }
+
+    // Jos käyttäjällä on kombokortti, valittu tili on jo asetettu loginissa
+    else if (accounts.size() > 1) {
+        // Esimerkkinä valitaan ensimmäinen tili – oikeasti tämä valinta tapahtuu loginissa
+        int selectedAccountId = accounts[0].toObject()["account_id"].toInt();
+        withdrawalWindow->setAccount(selectedAccountId);
+    }
+
+    withdrawalWindow->show();  // Näytetään noston ikkuna
 }
 
+void paaikkuna::setUserName(const QString &firstName, const QString &lastName)
+{
+    ui->labelUsername->setText("Tervetuloa " + firstName + " " + lastName + "!");
+}
+void paaikkuna::setAccounts(const QJsonArray &accountsArray)
+{
+    accounts = accountsArray;  // Tallennetaan kirjautumisessa saadut tilit
+
+    qDebug() << "Accounts set in paaikkuna:" << accounts;
+}

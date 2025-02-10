@@ -48,7 +48,7 @@
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>40€</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnFetchTransactions">
@@ -64,7 +64,7 @@
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>Tapahtumat</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnDifSum">
@@ -80,7 +80,7 @@
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>Muu summa</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="labelChosenSum">
@@ -122,8 +122,7 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0,);
-</string>
+    <string notr="true">color: black;</string>
    </property>
    <property name="text">
     <string/>
@@ -187,7 +186,7 @@ color: rgb(0, 0, 0);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>100€</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnClear">
@@ -278,7 +277,7 @@ color: rgb(0, 0, 0);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>20€</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btn5">
@@ -360,7 +359,7 @@ color: rgb(0, 0, 0);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>Takaisin</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btn0">
@@ -482,7 +481,7 @@ color: rgb(255, 255, 255);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>50€</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btn9">
@@ -507,6 +506,192 @@ color: rgb(255, 255, 255);</string>
     <string>9</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_20">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>90</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>20€</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_40">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>160</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>40€</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_50">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>230</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>50€</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_100">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>300</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>100€</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_back">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>300</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Takaisin</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_difSum">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>160</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Muu summa</string>
+   </property>
+  </widget>
+  <zorder>btn4</zorder>
+  <zorder>btn40</zorder>
+  <zorder>btnFetchTransactions</zorder>
+  <zorder>btnDifSum</zorder>
+  <zorder>labelChosenSum</zorder>
+  <zorder>btn6</zorder>
+  <zorder>btnStop</zorder>
+  <zorder>btn100</zorder>
+  <zorder>btnClear</zorder>
+  <zorder>btn2</zorder>
+  <zorder>btn1</zorder>
+  <zorder>btn20</zorder>
+  <zorder>btn5</zorder>
+  <zorder>btn8</zorder>
+  <zorder>btn7</zorder>
+  <zorder>btnArrow8</zorder>
+  <zorder>btn0</zorder>
+  <zorder>btnOk</zorder>
+  <zorder>btn3</zorder>
+  <zorder>labelChoseSum</zorder>
+  <zorder>btnArrow7</zorder>
+  <zorder>btn50</zorder>
+  <zorder>btn9</zorder>
+  <zorder>label_20</zorder>
+  <zorder>label_40</zorder>
+  <zorder>label_50</zorder>
+  <zorder>label_100</zorder>
+  <zorder>label_back</zorder>
+  <zorder>label_difSum</zorder>
+  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>

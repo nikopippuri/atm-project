@@ -32,6 +32,18 @@ checkPassword: function(card_id, callback) {
     `, [card_id], callback);
 },
 
+getAccounts: function(card_id, callback) {
+    const query = 'SELECT account_id, account_type FROM account WHERE card_id = ?';
+    db.query(query, [card_id], function(err, results) {
+      if (err) {
+        console.error("Database query error:", err);
+        callback(err, null);
+      } else {
+        callback(null, results);
+      }
+    });
+  },
+
 // päivittää yritysten määrän
 updateTryLeft: function (card_id, tries, callback) {
     return db.query('UPDATE card SET try_left=? WHERE card_id=?', [tries, card_id], callback);

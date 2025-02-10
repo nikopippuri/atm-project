@@ -2,6 +2,7 @@
 #define PAAIKKUNA_H
 
 #include <QDialog>
+#include "qjsonarray.h"
 #include "transactionsform.h"
 #include "withdrawal.h"
 
@@ -22,6 +23,8 @@ public:
     void setCard_id(const QString &newCard_id);
 
     void setMyToken(const QByteArray &newMyToken);
+    void setUserName(const QString &firstName, const QString &lastName);
+    void setAccounts(const QJsonArray &accountsArray);
 
 private slots:
     void on_btnFetchTransactions_clicked();
@@ -33,6 +36,7 @@ private:
     QString card_id;
     QByteArray myToken;
     withdrawal *withdrawalWindow;
+    QJsonArray accounts;
 };
 
 #endif // PAAIKKUNA_H

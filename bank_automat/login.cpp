@@ -25,7 +25,7 @@ Login::Login(QWidget *parent)
 
     ui->LeUserId->installEventFilter(this);
     ui->LeUserPin->installEventFilter(this);
-
+/*
     connect(ui->btn0,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn1,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn2,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
@@ -36,7 +36,7 @@ Login::Login(QWidget *parent)
     connect(ui->btn7,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn8,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
     connect(ui->btn9,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-
+*/
 }
 
 Login::~Login()
@@ -62,6 +62,11 @@ void Login::on_btnLogin_2_clicked()
 void Login::LoginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
+
+
+    qDebug() << "Login response data:" << response_data;
+
+
     if(response_data.length()<2){
         qDebug()<<"Palvelin ei vastaa";
         ui->labelInfo->setText("Palvelin ei vastaa!");
@@ -70,17 +75,67 @@ void Login::LoginSlot(QNetworkReply *reply)
         if(response_data=="-11"){
             ui->labelInfo->setText("Tietokanta virhe!");
         }
-        else{
-            if(response_data!="False" && response_data.length()>20){
-                ui->labelInfo->setText("kirjautuminen onnistui!");
+        else {
+            if (response_data != "False" && response_data.length() > 20) {
+                ui->labelInfo->setText("Kirjautuminen onnistui!");
+
+                timeoutTimer->stop();
+
+                // Puretaan JSON-vastaus
+                QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
+                QJsonObject jsonObject = jsonResponse.object();
+
+                QString token = jsonObject["token"].toString();
+                QString fname = jsonObject["fname"].toString();
+                QString lname = jsonObject["lname"].toString();
 
 
-                timeoutTimer->stop();   // 🔹 Poistetaan aikakatkaisun timeri käytöstä
+                //int cardType = jsonObject["card_type"].toInt();
 
-                QByteArray myToken="Bearer "+response_data;
-                paaikkuna *objpaaikkuna=new paaikkuna(this);
-                objpaaikkuna->setCard_id(ui->LeUserId->text());
+
+
+                QJsonArray accounts = jsonObject["accounts"].toArray();
+
+                qDebug() << "Accounts from login:" << accounts;
+
+                QByteArray myToken = "Bearer " + token.toUtf8();
+
+
+/*
+                if (cardType == 3) {  // Combo-kortti
+                    // Avaa valintaikkuna käyttäjälle
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("Valitse tili");
+                    msgBox.setText("Valitse käytettävä tili:");
+                    QPushButton *debitButton = msgBox.addButton(tr("Debit"), QMessageBox::AcceptRole);
+                    QPushButton *creditButton = msgBox.addButton(tr("Credit"), QMessageBox::RejectRole);
+
+                    msgBox.exec();
+
+                    QString selectedAccountType;
+                    if (msgBox.clickedButton() == debitButton) {
+                        selectedAccountType = "debit";
+                    } else if (msgBox.clickedButton() == creditButton) {
+                        selectedAccountType = "credit";
+                    }
+
+                    // Etsi valitun tilin ID ja välitä se eteenpäin
+                    int selectedAccountId = -1;
+                    for (const QJsonValue &val : accounts) {
+                        QJsonObject account = val.toObject();
+                        if (account["account_type"].toString() == selectedAccountType) {
+                            selectedAccountId = account["account_id"].toInt();
+                            break;
+                        }
+                    }
+                    */
+
+
+                // Luo pääikkuna ja välitä nimi ja token
+                paaikkuna *objpaaikkuna = new paaikkuna(this);
                 objpaaikkuna->setMyToken(myToken);
+                objpaaikkuna->setUserName(fname, lname);  // Välitetään nimi pääikkunaan
+                objpaaikkuna->setAccounts(accounts);
                 objpaaikkuna->open();
             }
             else{
@@ -293,10 +348,6 @@ void Login::mouseMoveEvent(QMouseEvent *event) {
     timeoutTimer->start(10000);  // 🔹 Nollataan ajastin hiiren liikkeellä
 }
 
-void Login::mouseMoveEvent(QMouseEvent *event) {
-    Q_UNUSED(event);  // 🔹 Estää käyttämättömän muuttujan varoituksen
-    timeoutTimer->start(10000);  // 🔹 Nollataan ajastin hiiren liikkeellä
-}
 
 bool Login::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::KeyPress) {

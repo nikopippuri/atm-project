@@ -16,6 +16,7 @@ class withdrawal : public QDialog
 
 public:
     explicit withdrawal(QWidget *parent = nullptr);
+    void setAccount(int accountId);
     ~withdrawal();
 
 private slots:
@@ -44,12 +45,16 @@ private slots:
 
 private:
     Ui::withdrawal *ui;
-
     QNetworkAccessManager *networkManager;
     QString customSum;
     void updateCustomSum();
     int selectedSum = 0;
     void sendWithdrawalRequest(int amount);
+    void sumOn();
+    void sumOff();
+    void numpadopen();
+    void numpadlocked();
+    int selected_account_id = -1;
 
 };
 
