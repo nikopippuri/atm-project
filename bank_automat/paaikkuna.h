@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "transactionsform.h"
+#include "withdrawal.h"
 
 namespace Ui {
 class paaikkuna;
@@ -25,10 +26,13 @@ public:
 private slots:
     void on_btnFetchTransactions_clicked();
 
+    void on_btnwithdraw_clicked();
+
 private:
     Ui::paaikkuna *ui;
     QString card_id;
     QByteArray myToken;
+    withdrawal *withdrawalWindow;
 };
 
 #endif // PAAIKKUNA_H
