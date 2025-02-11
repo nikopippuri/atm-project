@@ -12,12 +12,14 @@
  *      properties:
  *        transaction_id:
  *          type: integer
- *          description: The primary key of the card
+ *          description: The primary key of the transaction
  *        sum:
- *          type: integer
- *          description: The sum of transaction
+ *          type: number
+ *          format: decimal(10,2)
+ *          description: The sum of the transaction
  *        timestamp:
- *          type: integer
+ *          type: string
+ *          format: date-time
  *          description: When the transaction was made
  *        account_id:
  *          type: integer
@@ -28,7 +30,7 @@
  * @swagger
  * tags:
  *   - name: transactions
- *     description: CRUD operations for transaction table.
+ *     description: CRUD operations for the transactions table.
  */
 
 /** 
@@ -53,7 +55,7 @@
  * @swagger
  * /transactions:
  *   post:
- *     summary: Make a new transaction
+ *     summary: Create a new transaction (use timestamp format:2025-02-11 05:56:29)
  *     tags:
  *       - transactions
  *     requestBody:
@@ -63,13 +65,76 @@
  *           schema:
  *             $ref: '#/components/schemas/transactions'
  *     responses:
- *       200:
- *         description: New transaction was made
+ *       201:
+ *         description: New transaction created
  *         content:
  *           application/json:
  *             schema:
- *               items:
- *                 $ref: '#/components/schemas/transactions'
+ *               $ref: '#/components/schemas/transactions'
+ */
+
+/** 
+ * @swagger
+ * /transactions/{id}:
+ *   get:
+ *     summary: Get a transaction by ID
+ *     tags:
+ *       - transactions
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Transaction details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/transactions'
+ */
+
+/** 
+ * @swagger
+ * /transactions/{id}:
+ *   put:
+ *     summary: Update a transaction by ID
+ *     tags:
+ *       - transactions
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/transactions'
+ *     responses:
+ *       200:
+ *         description: Transaction updated
+ */
+
+/** 
+ * @swagger
+ * /transactions/{id}:
+ *   delete:
+ *     summary: Delete a transaction by ID
+ *     tags:
+ *       - transactions
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Transaction deleted successfully
  */
 
 

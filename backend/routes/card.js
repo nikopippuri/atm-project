@@ -40,8 +40,8 @@
  * /card:
  *   get:
  *     summary: List of all the cards
- *     security:
- *       - BearerAuth: []
+ *     tags:
+ *       - card
  *     responses:
  *       200:
  *         description: The list of all the cards
@@ -57,7 +57,7 @@
  * @swagger
  * /card:
  *   post:
- *     summary: Creates a new card
+ *     summary: Creates a new card (Need to create hashed pin with hash.js)
  *     tags:
  *       - card
  *     requestBody:
@@ -76,6 +76,45 @@
  *               items:
  *                 $ref: '#/components/schemas/card'
  */
+
+/** 
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Login with card_id and pin to generate token for authorization
+ *     tags:
+ *       - Authorize
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               card_id:
+ *                 type: integer
+ *                 description: The card_id for authentication
+ *               pin:
+ *                 type: string
+ *                 description: The pin for authentication
+ *     responses:
+ *       200:
+ *         description: Successfully logged in and returned JWT token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: The JWT token
+ *       401:
+ *         description: Unauthorized - Invalid card_id or pin
+ *       400:
+ *         description: Bad request - Missing card_id or pin
+ */
+
+
 
 /** 
  * @swagger

@@ -37,7 +37,7 @@ const options = {
       },
       servers: [
           {
-              url: "http://localhost:3000",
+              url: "http://localhost:3001",
           },
       ],
       components: {
@@ -66,7 +66,7 @@ app.use(authenticateToken);
 app.use('/card', cardRouter);
 app.use('/transactions', transactionRouter);
 
-const port = 3000; 
+const port = 3001; 
 app.listen(port, function() {
   console.log("Sovellus kuuntelee porttia " + port);
 });
