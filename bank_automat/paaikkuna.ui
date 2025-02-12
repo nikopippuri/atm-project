@@ -18,7 +18,7 @@
     <rect>
      <x>180</x>
      <y>220</y>
-     <width>421</width>
+     <width>391</width>
      <height>81</height>
     </rect>
    </property>
@@ -49,7 +49,7 @@ color: rgb(255, 255, 255);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string>Tapahtumat</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btn0">
@@ -172,7 +172,7 @@ color: rgb(0, 0, 0);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnArrow8">
+  <widget class="QPushButton" name="btnBack">
    <property name="geometry">
     <rect>
      <x>640</x>
@@ -210,7 +210,7 @@ color: rgb(0, 0, 0);</string>
     <string>5</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnArrow7">
+  <widget class="QPushButton" name="btnBalance">
    <property name="geometry">
     <rect>
      <x>640</x>
@@ -292,23 +292,6 @@ color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
     <string>1</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>140</y>
-     <width>471</width>
-     <height>251</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);
-</string>
-   </property>
-   <property name="text">
-    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btn8">
@@ -472,9 +455,137 @@ color: rgb(0, 0, 0);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_balance">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>290</y>
+     <width>41</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
+   <property name="text">
+    <string>Saldo</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_withdrawal">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>220</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
+   <property name="text">
     <string>Nosto</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_transactions">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>150</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
+   <property name="text">
+    <string>Tapahtumat</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_back">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>350</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
+   <property name="text">
+    <string>Takaisin</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>140</y>
+     <width>471</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 0, 0);
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_balance_2">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>220</y>
+     <width>241</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label_2</zorder>
   <zorder>btnFetchTransactions</zorder>
   <zorder>btn0</zorder>
   <zorder>btnClear</zorder>
@@ -482,13 +593,12 @@ color: rgb(0, 0, 0);</string>
   <zorder>btn7</zorder>
   <zorder>btnArrow1</zorder>
   <zorder>btnArrow2</zorder>
-  <zorder>btnArrow8</zorder>
+  <zorder>btnBack</zorder>
   <zorder>btn5</zorder>
-  <zorder>btnArrow7</zorder>
+  <zorder>btnBalance</zorder>
   <zorder>btnOk</zorder>
   <zorder>btnStop</zorder>
   <zorder>btn1</zorder>
-  <zorder>label_2</zorder>
   <zorder>btn8</zorder>
   <zorder>btn9</zorder>
   <zorder>btnArrow4</zorder>
@@ -498,6 +608,11 @@ color: rgb(0, 0, 0);</string>
   <zorder>btn2</zorder>
   <zorder>btnwithdraw</zorder>
   <zorder>labelUsername</zorder>
+  <zorder>label_back</zorder>
+  <zorder>label_balance</zorder>
+  <zorder>label_withdrawal</zorder>
+  <zorder>label_transactions</zorder>
+  <zorder>label_balance_2</zorder>
  </widget>
  <resources/>
  <connections/>

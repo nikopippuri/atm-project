@@ -16,7 +16,6 @@ withdrawal::withdrawal(QWidget *parent)
     connect(networkManager, &QNetworkAccessManager::finished, this, &withdrawal::onApiResponse);
 
     ui->labelChosenSum->hide();
-    ui->label_2->setStyleSheet("color: black;");
 
 }
 
@@ -25,18 +24,15 @@ withdrawal::~withdrawal()
     delete ui;
 }
 
+
 void withdrawal::sendWithdrawalRequest(int amount)
 {
 
-    qDebug() << "Selected Account ID: " << selected_account_id;
+
     if (selected_account_id == -1) {
         ui->labelChosenSum->setText("Tiliä ei ole valittu oikein. Tarkista kirjautuminen.");
         return;  // Estetään nosto, jos tilin ID on väärin
     }
-
-
-
-
 
     QUrl url("http://localhost:3000/api/withdraw");
     QNetworkRequest request(url);
@@ -56,7 +52,6 @@ void withdrawal::onApiResponse(QNetworkReply *reply)
 {
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray responseData = reply->readAll();
-        qDebug() << "Server response: " << responseData;
 
         QJsonDocument jsonResponse = QJsonDocument::fromJson(responseData);
         QJsonObject jsonObj = jsonResponse.object();

@@ -1,6 +1,7 @@
 #include "paaikkuna.h"
 #include "qjsonobject.h"
 #include "ui_paaikkuna.h"
+#include <QMessageBox>
 
 paaikkuna::paaikkuna(QWidget *parent)
     : QDialog(parent)
@@ -19,15 +20,16 @@ void paaikkuna::setMyToken(const QByteArray &newMyToken)
     myToken = newMyToken;
     qDebug()<<"paaikkuna";
     qDebug()<<myToken;
+    qDebug() << "Token pääikkunassa: " << myToken;
 }
 
 void paaikkuna::on_btnFetchTransactions_clicked()
 {
     qDebug()<<card_id;
     qDebug()<<myToken;
-
+qDebug() << "Opening Transactions Window with Account ID: " << selectedAccountId;
     // Luo uusi tapahtumat -ikkuna
-    TransactionsForm *transactionsForm = new TransactionsForm(card_id, myToken, this);
+    TransactionsForm *transactionsForm = new TransactionsForm(QString::number(selectedAccountId), myToken, this);
     transactionsForm->show(); // Näytä lomake
 }
 
@@ -36,19 +38,7 @@ void paaikkuna::on_btnwithdraw_clicked()
 {
     withdrawal *withdrawalWindow = new withdrawal(this);
 
-    // Oletetaan, että käyttäjällä on vain yksi tili (debit tai credit)
-    if (accounts.size() == 1) {
-        QJsonObject account = accounts[0].toObject();
-        int accountId = account["account_id"].toInt();  // Otetaan tilin ID
-        withdrawalWindow->setAccount(accountId);        // Välitetään nostoon
-    }
-
-    // Jos käyttäjällä on kombokortti, valittu tili on jo asetettu loginissa
-    else if (accounts.size() > 1) {
-        // Esimerkkinä valitaan ensimmäinen tili – oikeasti tämä valinta tapahtuu loginissa
-        int selectedAccountId = accounts[0].toObject()["account_id"].toInt();
-        withdrawalWindow->setAccount(selectedAccountId);
-    }
+    withdrawalWindow->setAccount(selectedAccountId);
 
     withdrawalWindow->show();  // Näytetään noston ikkuna
 }
@@ -63,3 +53,37 @@ void paaikkuna::setAccounts(const QJsonArray &accountsArray)
 
     qDebug() << "Accounts set in paaikkuna:" << accounts;
 }
+
+void paaikkuna::setSelectedAccountId(int accountId)
+{
+    selectedAccountId = accountId;  // Tallennetaan valittu tilin ID
+    qDebug() << "Selected Account ID set to:" << selectedAccountId;
+}
+
+void paaikkuna::on_btnBalance_clicked()
+{
+    ui->label_balance->hide();
+    ui->label_transactions->hide();
+    ui->label_withdrawal->hide();
+    showBalance();
+    ui->labelUsername->hide();
+}
+
+
+void paaikkuna::setBalance(double balance) {
+    currentBalance = balance;
+}
+
+// Metodi saldon näyttämiseen
+void paaikkuna::showBalance() {
+    ui->label_balance_2->setText("Tilisi saldo on: " + QString::number(currentBalance) + " €");
+}
+
+void paaikkuna::on_btnBack_clicked()
+{
+    ui->label_balance_2->hide();
+    ui->label_withdrawal->show();
+    ui->label_balance->show();
+    ui->label_transactions->show();
+}
+

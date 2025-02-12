@@ -55,6 +55,7 @@ private:
     void numpadopen();
     void numpadlocked();
     int selected_account_id = -1;
+    QByteArray myToken;
 
 };
 

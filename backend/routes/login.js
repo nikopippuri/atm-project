@@ -5,6 +5,7 @@ const card = require('../models/card_model');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
+
 router.post('/', 
   function(request, response) {
     if(request.body.card_id && request.body.pin){
@@ -41,6 +42,8 @@ router.post('/',
                   } else {
                     console.log("Accounts:", accountResults);
 
+                   
+
                     // 🔹 Palauta vastauksessa myös tilitiedot
                     response.json({
                       token: token,
@@ -48,6 +51,7 @@ router.post('/',
                       fname: dbResult[0].fname,
                       lname: dbResult[0].lname,
                       accounts: accountResults,  // Tässä palautetaan tilitiedot
+                      
                       message: `Tervetuloa ${dbResult[0].fname} ${dbResult[0].lname}!`
                     });
                   }
