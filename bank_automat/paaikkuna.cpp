@@ -8,6 +8,7 @@ paaikkuna::paaikkuna(QWidget *parent)
     , ui(new Ui::paaikkuna)
 {
     ui->setupUi(this);
+    ui->label_back->hide();
 }
 
 paaikkuna::~paaikkuna()
@@ -31,6 +32,7 @@ qDebug() << "Opening Transactions Window with Account ID: " << selectedAccountId
     // Luo uusi tapahtumat -ikkuna
     TransactionsForm *transactionsForm = new TransactionsForm(QString::number(selectedAccountId), myToken, this);
     transactionsForm->show(); // Näytä lomake
+    ui->label_balance_2->hide();
 }
 
 
@@ -39,6 +41,7 @@ void paaikkuna::on_btnwithdraw_clicked()
     withdrawal *withdrawalWindow = new withdrawal(this);
 
     withdrawalWindow->setAccount(selectedAccountId);
+    withdrawalWindow->setMyToken(myToken);
 
     withdrawalWindow->show();  // Näytetään noston ikkuna
 }
@@ -63,10 +66,12 @@ void paaikkuna::setSelectedAccountId(int accountId)
 void paaikkuna::on_btnBalance_clicked()
 {
     ui->label_balance->hide();
+    ui->label_balance_2->show();
     ui->label_transactions->hide();
     ui->label_withdrawal->hide();
     showBalance();
     ui->labelUsername->hide();
+    ui->label_back->show();
 }
 
 
@@ -85,5 +90,6 @@ void paaikkuna::on_btnBack_clicked()
     ui->label_withdrawal->show();
     ui->label_balance->show();
     ui->label_transactions->show();
+    ui->label_back->hide();
 }
 

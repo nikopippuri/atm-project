@@ -5,82 +5,87 @@ const card = require('../models/card_model');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
+router.post('/', function (request, response) {
+  if (request.body.card_id && request.body.pin) {
+    const user = request.body.card_id;
+    const pass = request.body.pin;
 
-router.post('/', 
-  function(request, response) {
-    if(request.body.card_id && request.body.pin){
-      const user = request.body.card_id;
-      const pass = request.body.pin;
-      
-        card.checkPassword(user, function(dbError, dbResult) {
-          if(dbError){
-            response.send("-11");
+    card.checkPassword(user, function (dbError, dbResult) {
+      if (dbError) {
+        response.send("-11");
+      } else {
+        if (dbResult.length > 0) {
+          const userData = dbResult[0];
+
+          // 🔹 Kortin lukituslogiikka ryhmäläisesi versiosta
+          if (userData.locked) {
+            console.log("Kortti lukittu");
+            return response.send("False");
           }
-          else{
-            if (dbResult.length > 0) {
-             bcrypt.compare(pass,dbResult[0].pin, function(err,compareResult) {
-                if(compareResult) {
-                  console.log("success");
 
-                  console.log("dbResult:", dbResult[0]);
+          bcrypt.compare(pass, userData.pin, function (err, compareResult) {
+            if (compareResult) {
+              console.log("Kirjautuminen onnistui");
 
-                  const cardType = dbResult[0].card_type;
-                  let cardTypeInt = 1;  // Oletuksena debit
-  
-                  if (cardType === 'credit') {
-                    cardTypeInt = 2;
-                  } else if (cardType === 'combo') {
-                    cardTypeInt = 3;
-                    
-                  }
-                  const token = generateAccessToken({ username: user });
+              // 🔹 Arvausten nollaus (ryhmäläisesi logiikka)
+              card.resetTryLeft(user, function () {
+                const token = generateAccessToken({ username: user });
 
-                card.getAccounts(user, function(accountError, accountResults) {
-                  if(accountError) {
-                    console.log("Error fetching accounts:", accountError);
-                    response.status(500).json({ message: 'Database error while fetching accounts' });
+                // 🔹 Haetaan tilitiedot (sinun logiikkasi)
+                card.getAccounts(user, function (accountError, accountResults) {
+                  if (accountError) {
+                    console.log("Virhe tilitietoja haettaessa:", accountError);
+                    response.status(500).json({ message: 'Tietokantavirhe tilitietojen haussa' });
                   } else {
-                    console.log("Accounts:", accountResults);
+                    console.log("Tilitiedot:", accountResults);
 
-                   
-
-                    // 🔹 Palauta vastauksessa myös tilitiedot
+                    // 🔹 Palautetaan vastaus, joka sisältää sinun toteutuksesi tiedot
                     response.json({
                       token: token,
-                      card_type: cardTypeInt,
-                      fname: dbResult[0].fname,
-                      lname: dbResult[0].lname,
-                      accounts: accountResults,  // Tässä palautetaan tilitiedot
-                      
-                      message: `Tervetuloa ${dbResult[0].fname} ${dbResult[0].lname}!`
+                      card_type: userData.card_type === 'credit' ? 2 : userData.card_type === 'combo' ? 3 : 1,
+                      fname: userData.fname,
+                      lname: userData.lname,
+                      accounts: accountResults,
+                      message: `Tervetuloa ${userData.fname} ${userData.lname}!`
                     });
                   }
                 });
-              }else {
-                    console.log("wrong password");
-                    response.send(false);
-                }			
+              });
+
+            } else {
+              // 🔹 Väärä PIN ja arvausten vähennys (ryhmäläisesi logiikka)
+              console.log("Väärä PIN");
+
+              let remainingTries = userData.try_left - 1;
+              if (remainingTries <= 0) {
+                console.log("Arvaukset loppu, kortti lukitaan");
+                card.lockCard(user, function () {
+                  response.send("False");
+                });
+              } else {
+                card.updateTryLeft(user, remainingTries, function () {
+                  console.log("Väärä arvaus, jäljellä: " + remainingTries);
+                  response.send("False");
+                });
               }
-              );
             }
-            else{
-              console.log("user does not exists");
-              response.send(false);
-            }
-          }
-          }
-        );
+          });
+
+        } else {
+          console.log("Käyttäjää ei löydy");
+          response.send("False");
+        }
       }
-    else{
-      console.log("username or password missing");
-      response.send(false);
-    }
+    });
+  } else {
+    console.log("Käyttäjätunnus tai PIN puuttuu");
+    response.send("False");
   }
-);
+});
 
 function generateAccessToken(username) {
   dotenv.config();
   return jwt.sign(username, process.env.MY_TOKEN, { expiresIn: '1800s' });
 }
 
-module.exports=router;
+module.exports = router;

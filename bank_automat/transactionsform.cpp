@@ -81,6 +81,11 @@ void TransactionsForm::updateTransactionList()
 {
     ui->listWidgetTransactions->clear(); // Tyhjennetään lista ennen päivitystä
 
+
+    std::sort(allTransactions.begin(), allTransactions.end(), [](const QJsonObject &a, const QJsonObject &b) {
+        return a["timestamp"].toString() > b["timestamp"].toString();
+    });
+
     int startIdx = currentPage * itemsPerPage;
     int endIdx = qMin(startIdx + itemsPerPage, allTransactions.size());
 

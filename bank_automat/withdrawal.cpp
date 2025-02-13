@@ -38,6 +38,8 @@ void withdrawal::sendWithdrawalRequest(int amount)
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
+    request.setRawHeader("Authorization", myToken);
+
     QJsonObject json;
     json["account_id"] = selected_account_id; // Käytetään valittua tiliä
     json["amount"] = amount;
@@ -215,4 +217,8 @@ void withdrawal::setAccount(int accountId)
 {
     selected_account_id = accountId;  // Asetetaan suoraan tilin ID
 
+}
+
+void withdrawal::setMyToken(const QByteArray &token) {
+    myToken = token;
 }

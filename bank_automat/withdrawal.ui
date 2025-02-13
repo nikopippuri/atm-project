@@ -620,7 +620,7 @@ color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="label_difSum">
    <property name="geometry">
     <rect>
-     <x>560</x>
+     <x>550</x>
      <y>160</y>
      <width>101</width>
      <height>31</height>
@@ -648,7 +648,7 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>180</x>
      <y>80</y>
-     <width>481</width>
+     <width>471</width>
      <height>251</height>
     </rect>
    </property>

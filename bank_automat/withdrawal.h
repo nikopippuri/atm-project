@@ -17,6 +17,7 @@ class withdrawal : public QDialog
 public:
     explicit withdrawal(QWidget *parent = nullptr);
     void setAccount(int accountId);
+    void setMyToken(const QByteArray &token);
     ~withdrawal();
 
 private slots:
@@ -40,8 +41,8 @@ private slots:
     void on_btnStop_clicked();
     void on_btnArrow8_clicked();// takaisin nappi
     void on_btnOk_clicked();
-
     void onApiResponse(QNetworkReply *reply);
+
 
 private:
     Ui::withdrawal *ui;

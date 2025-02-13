@@ -374,3 +374,4 @@ void Login::onTimeout()
     ui->labelInfo->setText("Aikakatkaisu!");
     QTimer::singleShot(2000, this, &QWidget::close); // Suljetaan ikkuna 2 sekunnin päästä
 }
+
