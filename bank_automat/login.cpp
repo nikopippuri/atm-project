@@ -49,13 +49,34 @@ void Login::on_btnLogin_2_clicked()
     reply = postManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
-void Login::LoginSlot(QNetworkReply *reply)
-{
-    response_data = reply->readAll();
+void Login::LoginSlot(QNetworkReply *reply) {
+    QByteArray response_data = reply->readAll();
     qDebug() << "Login response data:" << response_data;
 
     if (response_data.length() < 2) {
         ui->labelInfo->setText("Palvelin ei vastaa!");
+        return;
+    }
+
+    QString responseStr = QString::fromUtf8(response_data).trimmed();
+
+    if (responseStr == "False1") {
+        ui->labelInfo->setText("Kortti lukittu.");
+        return;
+    } else if (responseStr == "False2") {
+        ui->labelInfo->setText("Kortti lukitaan.");
+        return;
+    } else if (responseStr == "False3") {
+        ui->labelInfo->setText("Väärä arvaus.");
+        return;
+    } else if (responseStr == "False4") {
+        ui->labelInfo->setText("Käyttäjää ei löydy.");
+        return;
+    } else if (responseStr == "False5") {
+        ui->labelInfo->setText("Tunnus tai PIN puuttuu.");
+        return;
+    } else if (responseStr == "-11") {
+        ui->labelInfo->setText("Palvelinvirhe -11.");
         return;
     }
 
@@ -65,7 +86,7 @@ void Login::LoginSlot(QNetworkReply *reply)
     QString token = jsonObject["token"].toString();
     QString fname = jsonObject["fname"].toString();
     QString lname = jsonObject["lname"].toString();
-    int cardType = jsonObject["card_type"].toInt();  // 1 = debit, 2 = credit, 3 = combo
+    int cardType = jsonObject["card_type"].toInt();
     QJsonArray accounts = jsonObject["accounts"].toArray();
 
     myToken = "Bearer " + token.toUtf8();
@@ -73,7 +94,7 @@ void Login::LoginSlot(QNetworkReply *reply)
     int selectedAccountId = -1;
 
     if (cardType == 3) {  // Combo-kortti
-        ui->labelInfo->setText("Valitse Debit  tai Credit ");
+        ui->labelInfo->setText("Valitse Debit tai Credit");
         ui->label_credit->setText("Credit");
         ui->label_debit->setText("Debit");
         connect(ui->btnDebit, &QPushButton::clicked, this, [=]() {
@@ -90,7 +111,6 @@ void Login::LoginSlot(QNetworkReply *reply)
         selectedAccountId = accounts[0].toObject()["account_id"].toInt();
     }
 
-
     if (selectedAccountId == -1) {
         ui->labelInfo->setText("Tilin valinta epäonnistui!");
         return;
@@ -98,10 +118,12 @@ void Login::LoginSlot(QNetworkReply *reply)
 
     // Haetaan saldo kirjautumisen jälkeen
     fetchBalance(myToken, selectedAccountId, fname, lname);
+    timeoutTimer->stop();   // Poistetaan aikakatkaisun timeri käytöstä
 
     reply->deleteLater();
     postManager->deleteLater();
 }
+
 
 void Login::selectAccountType(const QString &selectedAccountType, const QJsonArray &accounts, const QString &fname, const QString &lname)
 {
