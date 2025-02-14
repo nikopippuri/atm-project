@@ -20,7 +20,7 @@ router.post('/', function (request, response) {
           // 🔹 Kortin lukituslogiikka ryhmäläisesi versiosta
           if (userData.locked) {
             console.log("Kortti lukittu");
-            return response.send("False");
+            return response.send("False1");
           }
 
           bcrypt.compare(pass, userData.pin, function (err, compareResult) {
@@ -60,12 +60,12 @@ router.post('/', function (request, response) {
               if (remainingTries <= 0) {
                 console.log("Arvaukset loppu, kortti lukitaan");
                 card.lockCard(user, function () {
-                  response.send("False");
+                  response.send("False2");
                 });
               } else {
                 card.updateTryLeft(user, remainingTries, function () {
                   console.log("Väärä arvaus, jäljellä: " + remainingTries);
-                  response.send("False");
+                  response.send("False3");
                 });
               }
             }
@@ -73,13 +73,13 @@ router.post('/', function (request, response) {
 
         } else {
           console.log("Käyttäjää ei löydy");
-          response.send("False");
+          response.send("False4");
         }
       }
     });
   } else {
     console.log("Käyttäjätunnus tai PIN puuttuu");
-    response.send("False");
+    response.send("False5");
   }
 });
 

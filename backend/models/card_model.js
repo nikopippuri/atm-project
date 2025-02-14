@@ -25,7 +25,7 @@ return db.query('DELETE FROM card WHERE card_id=?',[del],callback);
 },
 checkPassword: function(card_id, callback) {
     return db.query(`
-        SELECT c.pin, c.card_type, cu.fname, cu.lname 
+        SELECT c.pin, c.card_type, cu.fname, cu.lname, try_left, locked
         FROM card c
         JOIN customer cu ON c.customer_id = cu.customer_id
         WHERE c.card_id = ?
