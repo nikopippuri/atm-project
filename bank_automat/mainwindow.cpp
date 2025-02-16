@@ -25,4 +25,3 @@ void MainWindow::on_btnStart_clicked()
     Login *objLogin=new Login(this);
     objLogin->open();
 }
-

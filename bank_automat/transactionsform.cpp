@@ -114,4 +114,3 @@ void TransactionsForm::on_btnPrevious_clicked()
         updateTransactionList();
     }
 }
-

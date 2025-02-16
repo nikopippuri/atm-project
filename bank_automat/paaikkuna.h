@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "transactionsform.h"
+#include "balance.h"
 
 namespace Ui {
 class paaikkuna;
@@ -24,11 +25,16 @@ public:
 
 private slots:
     void on_btnFetchTransactions_clicked();
+    void on_btnCheckBalance_clicked(); // Uusi nappi saldoa varten
+
+    void updateBalance(double newBalance);
+    void showBalanceError(const QString &errorMsg);
 
 private:
     Ui::paaikkuna *ui;
     QString card_id;
     QByteArray myToken;
+    Balance *balanceChecker; // Uusi jäsenmuuttuja
 };
 
 #endif // PAAIKKUNA_H

@@ -8,7 +8,7 @@ class Enviroment
 {
 public:
     Enviroment();
-static QString base_url();
+    static QString base_url();
 };
 
 #endif // ENVIROMENT_H

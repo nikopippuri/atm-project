@@ -135,7 +135,7 @@ color: rgb(0, 0, 0);</string>
     <string>7</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnArrow1">
+  <widget class="QPushButton" name="btnCheckBalance">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -153,7 +153,7 @@ color: rgb(0, 0, 0);</string>
     <string notr="true">background-color: rgb(180, 180, 180);</string>
    </property>
    <property name="text">
-    <string/>
+    <string>Saldo</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnArrow2">
@@ -498,12 +498,25 @@ color: rgb(0, 0, 0);</string>
     <string>Tervetuloa</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelBalance">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>330</y>
+     <width>271</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#ffffff;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
   <zorder>btnFetchTransactions</zorder>
   <zorder>btn0</zorder>
   <zorder>btnClear</zorder>
   <zorder>btnArrow3</zorder>
   <zorder>btn7</zorder>
-  <zorder>btnArrow1</zorder>
+  <zorder>btnCheckBalance</zorder>
   <zorder>btnArrow2</zorder>
   <zorder>btnArrow8</zorder>
   <zorder>btn5</zorder>
@@ -522,6 +535,7 @@ color: rgb(0, 0, 0);</string>
   <zorder>btnArrow6</zorder>
   <zorder>labelUsername</zorder>
   <zorder>label</zorder>
+  <zorder>labelBalance</zorder>
  </widget>
  <resources/>
  <connections/>

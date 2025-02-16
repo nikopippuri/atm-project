@@ -72,10 +72,10 @@ void Login::LoginSlot(QNetworkReply *reply)
         }
         else{
             if(response_data!="False" && response_data.length()>20){
-                ui->labelInfo->setText("kirjautuminen onnistui!");
+                ui->labelInfo->setText("Kirjautuminen onnistui!");
 
 
-                timeoutTimer->stop();   // 🔹 Poistetaan aikakatkaisun timeri käytöstä
+                timeoutTimer->stop();   // Poistetaan aikakatkaisun timeri käytöstä
 
                 QByteArray myToken="Bearer "+response_data;
                 paaikkuna *objpaaikkuna=new paaikkuna(this);
@@ -85,7 +85,7 @@ void Login::LoginSlot(QNetworkReply *reply)
             }
             else{
                 qDebug()<<response_data;
-                ui->labelInfo->setText("Väärä ID tai PIN!");
+                ui->labelInfo->setText("Kirjatuminen epäonnistui.");
             }
 
         }
@@ -235,7 +235,7 @@ void Login::on_btn7_clicked()
         pinText += "7";
         ui->LeUserPin->setText(pinText);
 
-}
+    }
 }
 
 
@@ -284,20 +284,20 @@ void Login::on_btnClear_clicked()
         if (!userIdText.isEmpty()) {
             userIdText.chop(1);
             ui->LeUserId->setText(userIdText);
+        }
     }
-}
 }
 
 void Login::mouseMoveEvent(QMouseEvent *event) {
-    Q_UNUSED(event);  // 🔹 Estää käyttämättömän muuttujan varoituksen
-    timeoutTimer->start(10000);  // 🔹 Nollataan ajastin hiiren liikkeellä
+    Q_UNUSED(event);  // Estää käyttämättömän muuttujan varoituksen
+    timeoutTimer->start(10000);  // Nollataan ajastin hiiren liikkeellä
 }
 
 bool Login::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::KeyPress) {
-        timeoutTimer->start(10000);  // 🔹 Nollataan ajastin näppäinpainalluksella
+        timeoutTimer->start(10000);  // Nollataan ajastin näppäinpainalluksella
     }
-    return QDialog::eventFilter(obj, event); // 🔹 Palautetaan tapahtuma normaalisti
+    return QDialog::eventFilter(obj, event); // Palautetaan tapahtuma normaalisti
 }
 
 
@@ -306,5 +306,3 @@ void Login::onTimeout()
     ui->labelInfo->setText("Aikakatkaisu!");
     QTimer::singleShot(2000, this, &QWidget::close); // Suljetaan ikkuna 2 sekunnin päästä
 }
-
-
