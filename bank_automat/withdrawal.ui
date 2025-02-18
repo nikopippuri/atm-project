@@ -660,6 +660,28 @@ color: rgb(255, 255, 255);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>-30</y>
+     <width>471</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Cooper Black</family>
+     <pointsize>48</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: orange;</string>
+   </property>
+   <property name="text">
+    <string>Banken OYAB</string>
+   </property>
+  </widget>
   <zorder>label_2</zorder>
   <zorder>btn4</zorder>
   <zorder>btn40</zorder>
@@ -690,6 +712,7 @@ color: rgb(255, 255, 255);</string>
   <zorder>label_100</zorder>
   <zorder>label_back</zorder>
   <zorder>label_difSum</zorder>
+  <zorder>label</zorder>
  </widget>
  <resources/>
  <connections/>

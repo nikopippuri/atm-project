@@ -585,6 +585,28 @@ color: rgb(0, 0, 0);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>0</y>
+     <width>471</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Cooper Black</family>
+     <pointsize>48</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: orange;</string>
+   </property>
+   <property name="text">
+    <string>Banken OYAB</string>
+   </property>
+  </widget>
   <zorder>label_2</zorder>
   <zorder>btnFetchTransactions</zorder>
   <zorder>btn0</zorder>
@@ -613,6 +635,7 @@ color: rgb(0, 0, 0);</string>
   <zorder>label_withdrawal</zorder>
   <zorder>label_transactions</zorder>
   <zorder>label_balance_2</zorder>
+  <zorder>label</zorder>
  </widget>
  <resources/>
  <connections/>
