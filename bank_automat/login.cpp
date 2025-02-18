@@ -57,36 +57,11 @@ void Login::LoginSlot(QNetworkReply *reply) {
         ui->labelInfo->setText("Palvelin ei vastaa!");
         return;
     }
-<<<<<<< HEAD
-    else{
-        if(response_data=="-11"){
-            ui->labelInfo->setText("Tietokanta virhe!");
-        }
-        else{
-            if(response_data!="False" && response_data.length()>20){
-                ui->labelInfo->setText("Kirjautuminen onnistui!");
-=======
->>>>>>> niko_yrittaa_siirtaa_credit_mainiksi
+
 
     QString responseStr = QString::fromUtf8(response_data).trimmed();
 
-<<<<<<< HEAD
-                timeoutTimer->stop();   // Poistetaan aikakatkaisun timeri käytöstä
 
-                QByteArray myToken="Bearer "+response_data;
-                paaikkuna *objpaaikkuna=new paaikkuna(this);
-                objpaaikkuna->setCard_id(ui->LeUserId->text());
-                objpaaikkuna->setMyToken(myToken);
-                objpaaikkuna->open();
-            }
-            else{
-                qDebug()<<response_data;
-                ui->labelInfo->setText("Kirjatuminen epäonnistui.");
-            }
-
-        }
-
-=======
     if (responseStr == "False1") {
         ui->labelInfo->setText("Kortti lukittu.");
         return;
@@ -105,7 +80,7 @@ void Login::LoginSlot(QNetworkReply *reply) {
     } else if (responseStr == "-11") {
         ui->labelInfo->setText("Palvelinvirhe -11.");
         return;
->>>>>>> niko_yrittaa_siirtaa_credit_mainiksi
+
     }
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
