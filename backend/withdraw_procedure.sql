@@ -1,9 +1,7 @@
-
 // aja tämä omassa tietokannassa
-
 DELIMITER //
 
-CREATE PROCEDURE `withdrawal`(
+ CREATE PROCEDURE `withdrawal`(
     IN p_account_id INT, 
     IN p_amount DECIMAL(10, 2)
 )
@@ -24,7 +22,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Account not found';
     ELSEIF current_balance < p_amount THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Insufficient funds';
+        SET MESSAGE_TEXT = 'Saldo ei riitä';
     ELSE
         
         UPDATE account
@@ -34,8 +32,7 @@ BEGIN
         INSERT INTO transaction (account_id, sum, timestamp)
         VALUES (p_account_id, -p_amount, NOW());
         
-        SELECT 'Withdrawal successful' AS message, current_balance - p_amount AS new_balance;
+        SELECT 'Nosto onnistui' AS message, current_balance - p_amount AS new_balance;
     END IF;
-END //
-
+    END //
 DELIMITER ;

@@ -13,6 +13,7 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(express.json());
+app.use('/api/transactions', transactionRouter); 
 
 const withdrawRouter = require('./routes/withdraw');
 app.use('/api', withdrawRouter);
@@ -28,7 +29,7 @@ app.use(authenticateToken);
 app.use('/card', cardRouter);
 app.use('/transactions', transactionRouter);
 const balanceRouter = require('./routes/balance');
-app.use(balanceRouter);
+app.use('/api', balanceRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']

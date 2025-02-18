@@ -1,9 +1,11 @@
 #include "enviroment.h"
 #include "login.h"
 #include "paaikkuna.h"
+#include "qmessagebox.h"
 #include "ui_login.h"
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QMessageBox>
 
 Login::Login(QWidget *parent)
     : QDialog(parent)
@@ -25,18 +27,6 @@ Login::Login(QWidget *parent)
 
     ui->LeUserId->installEventFilter(this);
     ui->LeUserPin->installEventFilter(this);
-
-    connect(ui->btn0,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn1,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn2,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn3,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn4,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn5,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn6,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn7,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn8,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-    connect(ui->btn9,SIGNAL(clicked()), this,SLOT(on_btn_clicked()));
-
 }
 
 Login::~Login()
@@ -50,22 +40,24 @@ void Login::on_btnLogin_2_clicked()
     jsonObj.insert("card_id",ui->LeUserId->text());
     jsonObj.insert("pin",ui->LeUserPin->text());
 
+    // Korjattu kirjautumisreitti takaisin oikeaksi
     QString site_url=Enviroment::base_url()+"/login";
     QNetworkRequest request(site_url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     postManager = new QNetworkAccessManager(this);
     connect(postManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(LoginSlot(QNetworkReply*)));
     reply = postManager->post(request, QJsonDocument(jsonObj).toJson());
-
 }
 
-void Login::LoginSlot(QNetworkReply *reply)
-{
-    response_data=reply->readAll();
-    if(response_data.length()<2){
-        qDebug()<<"Palvelin ei vastaa";
+void Login::LoginSlot(QNetworkReply *reply) {
+    QByteArray response_data = reply->readAll();
+    qDebug() << "Login response data:" << response_data;
+
+    if (response_data.length() < 2) {
         ui->labelInfo->setText("Palvelin ei vastaa!");
+        return;
     }
+<<<<<<< HEAD
     else{
         if(response_data=="-11"){
             ui->labelInfo->setText("Tietokanta virhe!");
@@ -73,8 +65,12 @@ void Login::LoginSlot(QNetworkReply *reply)
         else{
             if(response_data!="False" && response_data.length()>20){
                 ui->labelInfo->setText("Kirjautuminen onnistui!");
+=======
+>>>>>>> niko_yrittaa_siirtaa_credit_mainiksi
 
+    QString responseStr = QString::fromUtf8(response_data).trimmed();
 
+<<<<<<< HEAD
                 timeoutTimer->stop();   // Poistetaan aikakatkaisun timeri käytöstä
 
                 QByteArray myToken="Bearer "+response_data;
@@ -90,11 +86,132 @@ void Login::LoginSlot(QNetworkReply *reply)
 
         }
 
+=======
+    if (responseStr == "False1") {
+        ui->labelInfo->setText("Kortti lukittu.");
+        return;
+    } else if (responseStr == "False2") {
+        ui->labelInfo->setText("Kortti lukitaan.");
+        return;
+    } else if (responseStr == "False3") {
+        ui->labelInfo->setText("Väärä arvaus.");
+        return;
+    } else if (responseStr == "False4") {
+        ui->labelInfo->setText("Käyttäjää ei löydy.");
+        return;
+    } else if (responseStr == "False5") {
+        ui->labelInfo->setText("Tunnus tai PIN puuttuu.");
+        return;
+    } else if (responseStr == "-11") {
+        ui->labelInfo->setText("Palvelinvirhe -11.");
+        return;
+>>>>>>> niko_yrittaa_siirtaa_credit_mainiksi
     }
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
+    QJsonObject jsonObject = jsonResponse.object();
+
+    QString token = jsonObject["token"].toString();
+    QString fname = jsonObject["fname"].toString();
+    QString lname = jsonObject["lname"].toString();
+    int cardType = jsonObject["card_type"].toInt();
+    QJsonArray accounts = jsonObject["accounts"].toArray();
+
+    myToken = "Bearer " + token.toUtf8();
+
+    int selectedAccountId = -1;
+
+    if (cardType == 3) {  // Combo-kortti
+        ui->labelInfo->setText("Valitse Debit tai Credit");
+        ui->label_credit->setText("Credit");
+        ui->label_debit->setText("Debit");
+        connect(ui->btnDebit, &QPushButton::clicked, this, [=]() {
+            selectAccountType("debit", accounts, fname, lname);
+        });
+
+        connect(ui->btnCredit, &QPushButton::clicked, this, [=]() {
+            selectAccountType("credit", accounts, fname, lname);
+        });
+
+        return;  // Odotetaan käyttäjän valintaa
+    } else {
+        // Jos kortti on debit tai credit, valitaan ensimmäinen tili
+        selectedAccountId = accounts[0].toObject()["account_id"].toInt();
+    }
+
+    if (selectedAccountId == -1) {
+        ui->labelInfo->setText("Tilin valinta epäonnistui!");
+        return;
+    }
+
+    // Haetaan saldo kirjautumisen jälkeen
+    fetchBalance(myToken, selectedAccountId, fname, lname);
+    timeoutTimer->stop();   // Poistetaan aikakatkaisun timeri käytöstä
+
     reply->deleteLater();
     postManager->deleteLater();
 }
 
+
+void Login::selectAccountType(const QString &selectedAccountType, const QJsonArray &accounts, const QString &fname, const QString &lname)
+{
+    int selectedAccountId = -1;
+
+    for (const QJsonValue &val : accounts) {
+        QJsonObject account = val.toObject();
+        if (account["account_type"].toString() == selectedAccountType) {
+            selectedAccountId = account["account_id"].toInt();
+            break;
+        }
+    }
+
+    if (selectedAccountId == -1) {
+        ui->labelInfo->setText("Tilin valinta epäonnistui!");
+        return;
+    }
+
+    // Haetaan saldo valinnan jälkeen
+    fetchBalance(myToken, selectedAccountId, fname, lname);
+}
+
+void Login::fetchBalance(const QByteArray &token, int accountId, const QString &fname, const QString &lname)
+{
+    QString balanceUrl = Enviroment::base_url() + "/api/balance?account_id=" + QString::number(accountId);
+    QNetworkRequest request(balanceUrl);
+    request.setRawHeader("Authorization", token);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager *balanceManager = new QNetworkAccessManager(this);
+    connect(balanceManager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+        QByteArray balanceData = reply->readAll();
+        qDebug() << "Balance response data:" << balanceData;
+
+        if (reply->error() != QNetworkReply::NoError) {
+            ui->labelInfo->setText("Saldon hakeminen epäonnistui!");
+            reply->deleteLater();
+            return;
+        }
+
+        QJsonDocument balanceResponse = QJsonDocument::fromJson(balanceData);
+        QJsonObject balanceObject = balanceResponse.object();
+
+        // Muutetaan merkkijonosta doubleksi
+        double balance = balanceObject["balance"].toString().toDouble();
+        qDebug() << "Saldo asetettu arvoon: " << balance;
+
+        // Avaa pääikkuna ja välitä tiedot
+        paaikkuna *mainWindow = new paaikkuna(this);
+        mainWindow->setMyToken(token);
+        mainWindow->setUserName(fname, lname);
+        mainWindow->setSelectedAccountId(accountId);
+        mainWindow->setBalance(balance);
+        mainWindow->open();
+
+        reply->deleteLater();
+    });
+
+    balanceManager->get(request);
+}
 void Login::on_btn0_clicked()
 {
     QString currentText = ui->LeUserId->text();
@@ -235,7 +352,7 @@ void Login::on_btn7_clicked()
         pinText += "7";
         ui->LeUserPin->setText(pinText);
 
-}
+    }
 }
 
 
@@ -284,14 +401,15 @@ void Login::on_btnClear_clicked()
         if (!userIdText.isEmpty()) {
             userIdText.chop(1);
             ui->LeUserId->setText(userIdText);
+        }
     }
-}
 }
 
 void Login::mouseMoveEvent(QMouseEvent *event) {
     Q_UNUSED(event);  // Estää käyttämättömän muuttujan varoituksen
     timeoutTimer->start(10000);  // Nollataan ajastin hiiren liikkeellä
 }
+
 
 bool Login::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::KeyPress) {
@@ -306,5 +424,4 @@ void Login::onTimeout()
     ui->labelInfo->setText("Aikakatkaisu!");
     QTimer::singleShot(2000, this, &QWidget::close); // Suljetaan ikkuna 2 sekunnin päästä
 }
-
 
