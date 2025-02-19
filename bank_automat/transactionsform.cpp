@@ -104,7 +104,12 @@ void TransactionsForm::updateTransactionList()
 
     // Päivitetään napit (estetään siirtyminen mahdottomiin suuntiin)
     ui->btnNext->setEnabled(endIdx < allTransactions.size());
+    ui->btnNext_2->setEnabled(endIdx < allTransactions.size());
+    ui->btnNext_2->setVisible(endIdx < allTransactions.size());
+
     ui->btnPrevious->setEnabled(currentPage > 0);
+    ui->btnPrevious_2->setEnabled(currentPage > 0);
+    ui->btnPrevious_2->setVisible(currentPage > 0);
 }
 
 void TransactionsForm::on_btnNext_clicked()
