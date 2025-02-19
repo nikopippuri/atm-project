@@ -9,6 +9,10 @@ paaikkuna::paaikkuna(QWidget *parent)
 {
     ui->setupUi(this);
     ui->label_back->hide();
+
+    balanceChecker = new Balance(this);
+    connect(balanceChecker, &Balance::balanceUpdated, this, &paaikkuna::updateBalance);
+    connect(balanceChecker, &Balance::errorOccurred, this, &paaikkuna::showBalanceError);
 }
 
 paaikkuna::~paaikkuna()
@@ -32,7 +36,7 @@ qDebug() << "Opening Transactions Window with Account ID: " << selectedAccountId
     // Luo uusi tapahtumat -ikkuna
     TransactionsForm *transactionsForm = new TransactionsForm(QString::number(selectedAccountId), myToken, this);
     transactionsForm->show(); // Näytä lomake
-    ui->label_balance_2->hide();
+    ui->labelBalance->hide();
 }
 
 
@@ -63,33 +67,48 @@ void paaikkuna::setSelectedAccountId(int accountId)
     qDebug() << "Selected Account ID set to:" << selectedAccountId;
 }
 
+void paaikkuna::setBalance(double balance) {
+    currentBalance = balance;
+}
+
 void paaikkuna::on_btnBalance_clicked()
 {
     ui->label_balance->hide();
-    ui->label_balance_2->show();
+    ui->labelBalance->show();
     ui->label_transactions->hide();
     ui->label_withdrawal->hide();
-    showBalance();
+
+    // Haetaan saldo palvelimelta
+    if (balanceChecker && selectedAccountId != -1) {
+        balanceChecker->fetchBalance(QString::number(selectedAccountId), myToken);
+    } else {
+        ui->labelBalance->setText("Tilin ID puuttuu tai virheellinen!");
+    }
     ui->labelUsername->hide();
     ui->label_back->show();
 }
 
 
-void paaikkuna::setBalance(double balance) {
-    currentBalance = balance;
+void paaikkuna::updateBalance(double newBalance) {
+    currentBalance = newBalance;
+    showBalance(); // Päivittää käyttöliittymän, jos tarpeen
 }
 
 // Metodi saldon näyttämiseen
 void paaikkuna::showBalance() {
-    ui->label_balance_2->setText("Tilisi saldo on: " + QString::number(currentBalance) + " €");
+    ui->labelBalance->setText("Tilisi saldo on: " + QString::number(currentBalance) + " €");
 }
 
 void paaikkuna::on_btnBack_clicked()
 {
-    ui->label_balance_2->hide();
+    ui->labelBalance->hide();
     ui->label_withdrawal->show();
     ui->label_balance->show();
     ui->label_transactions->show();
     ui->label_back->hide();
+}
+
+void paaikkuna::showBalanceError(const QString &errorMsg) {
+    ui->labelBalance->setText("Virhe: " + errorMsg);
 }
 

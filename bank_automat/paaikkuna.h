@@ -5,6 +5,7 @@
 #include "qjsonarray.h"
 #include "transactionsform.h"
 #include "withdrawal.h"
+#include "balance.h"
 
 namespace Ui {
 class paaikkuna;
@@ -39,6 +40,10 @@ private slots:
 
     void on_btnBack_clicked();
 
+    void updateBalance(double newBalance);
+
+    void showBalanceError(const QString &errorMsg);
+
 private:
     Ui::paaikkuna *ui;
     QString card_id;
@@ -46,7 +51,8 @@ private:
     withdrawal *withdrawalWindow;
     QJsonArray accounts;
     int selectedAccountId = -1;
-    double currentBalance;  // Muuttuja saldolle
+    Balance *balanceChecker;  // Muuttuja saldolle
+    double currentBalance = 0.0;
 };
 
 #endif // PAAIKKUNA_H
