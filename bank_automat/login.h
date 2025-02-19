@@ -27,6 +27,7 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QTimer *timeoutTimer; // Aikakatkaisuun
+    QByteArray myToken;
 
 private slots:
     void on_btnClear_clicked();
@@ -45,6 +46,9 @@ private slots:
     void onTimeout(); // Aikakatkaisu funktio
     void mouseMoveEvent(QMouseEvent *event); // Hiiren liikutus
     bool eventFilter(QObject *obj, QEvent *event);
+    void selectAccountType(const QString &selectedAccountType, const QJsonArray &accounts, const QString &fname, const QString &lname);
+
+    void fetchBalance(const QByteArray &token, int accountId, const QString &fname, const QString &lname);
 };
 
 #endif // LOGIN_H

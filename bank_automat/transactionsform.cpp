@@ -29,7 +29,8 @@ TransactionsForm::~TransactionsForm()
 void TransactionsForm::fetchTransactions()
 {
 
-    QString url = QString("%1/transactions/%2").arg(Enviroment::base_url()).arg(accountId);
+    QString url = QString("%1/api/transactions/%2").arg(Enviroment::base_url()).arg(accountId);
+
     QNetworkRequest request((QUrl(url)));
 
     request.setRawHeader("Authorization", myToken); // Lisätään tokeni
@@ -50,6 +51,8 @@ void TransactionsForm::onTransactionsFetched(QNetworkReply *reply)
     }
 
     QByteArray response = reply->readAll();
+
+
     QJsonDocument jsonDoc = QJsonDocument::fromJson(response);
     reply->deleteLater();
 
@@ -58,16 +61,16 @@ void TransactionsForm::onTransactionsFetched(QNetworkReply *reply)
         return;
     }
 
-    // Tallennetaan kaikki tapahtumat muuttujaan
     allTransactions.clear();
     for (const QJsonValue &value : jsonDoc.array()) {
         allTransactions.append(value.toObject());
     }
 
-    // Aloitetaan ensimmäiseltä sivulta
     currentPage = 0;
     updateTransactionList();
 }
+
+
 
 void TransactionsForm::on_btnStop_clicked()
 {
@@ -77,6 +80,11 @@ void TransactionsForm::on_btnStop_clicked()
 void TransactionsForm::updateTransactionList()
 {
     ui->listWidgetTransactions->clear(); // Tyhjennetään lista ennen päivitystä
+
+
+    std::sort(allTransactions.begin(), allTransactions.end(), [](const QJsonObject &a, const QJsonObject &b) {
+        return a["timestamp"].toString() > b["timestamp"].toString();
+    });
 
     int startIdx = currentPage * itemsPerPage;
     int endIdx = qMin(startIdx + itemsPerPage, allTransactions.size());
@@ -114,4 +122,3 @@ void TransactionsForm::on_btnPrevious_clicked()
         updateTransactionList();
     }
 }
-

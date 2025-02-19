@@ -23,9 +23,28 @@ delete:function(del,callback){
 return db.query('DELETE FROM card WHERE card_id=?',[del],callback);
 
 },
-checkPassword:function(card_id,callback){
-return db.query('SELECT pin FROM card WHERE card_id=?',[card_id],callback);
+
+checkPassword: function(card_id, callback) {
+    return db.query(`
+        SELECT c.pin, c.card_type, cu.fname, cu.lname, try_left, locked
+        FROM card c
+        JOIN customer cu ON c.customer_id = cu.customer_id
+        WHERE c.card_id = ?
+    `, [card_id], callback);
 },
+
+getAccounts: function(card_id, callback) {
+    const query = 'SELECT account_id, account_type FROM account WHERE card_id = ?';
+    db.query(query, [card_id], function(err, results) {
+      if (err) {
+        console.error("Database query error:", err);
+        callback(err, null);
+      } else {
+        callback(null, results);
+      }
+    });
+  },
+
 
 // päivittää yritysten määrän
 updateTryLeft: function (card_id, tries, callback) {
