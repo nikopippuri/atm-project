@@ -72,9 +72,9 @@ This school project simulates a ATM system using modern technologies, including 
 
 ## Contributors
 - **Niko Pippuri**
-- **Team Member Name**
-- **Team Member Name**
-- **Team Member Name** 
+- **Jan-Markus Jaakola**
+- **Iiro Toivari**
+- **Mika Wallenius** 
 
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
