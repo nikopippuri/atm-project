@@ -16,6 +16,10 @@
 
 - [Database ER model](#database-er-model)
 
+- [Poster](#poster)
+
+- [Presentation](#presentation)
+
 - [Contributors](#contributors)
 
 - [License](#license)
@@ -54,8 +58,7 @@ This school project simulates a ATM system using modern technologies, including 
    - Import the provided SQL schema and test data.
 3. Install backend dependencies:
    ```bash
-   cd backend
-   npm install
+   cd backend && npm install swagger-ui-express swagger-jsdoc
    ```
 4. Run the backend:
    ```bash
@@ -64,17 +67,27 @@ This school project simulates a ATM system using modern technologies, including 
 5. Set up and run the Qt application.
 
 ## Usage
-- Launch the Qt application and log in using your card's ID ja enter correnct PIN.
+- Launch the Qt application and log in using your card's ID ja enter correct PIN.
 - Use the available features to view your balance, withdraw money, and view transaction history.
 
 ## Database ER model
-![Er kaavio](images/er_kaavio.png)
+![Er kaavio](images/ER_kaavio_credit.png)
 
 ## Contributors
 - **Niko Pippuri**
 - **Jan-Markus Jaakola**
 - **Iiro Toivari**
 - **Mika Wallenius** 
+
+## Poster
+[![Poster](images/posteri_kuva.png)](images/group_8_english_poster.pdf)
+
+## Presentation
+
+<a href="images/Project_presentation.pptx">
+    <img src="images/presentation_thumb.png" alt="Presentation Preview" width="300">
+</a>
+
 
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
