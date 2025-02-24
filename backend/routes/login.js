@@ -5,11 +5,15 @@ const card = require('../models/card_model');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
+// Saadaan käyttäjältä requestina card_id ja pin-koodi
+
 router.post('/', function (request, response) {
   if (request.body.card_id && request.body.pin) {
 
     const user = request.body.card_id;
     const pass = request.body.pin;
+
+    // Vertaa salasanaa ja käyttäjätunnusta tietokannasta löytyviin
 
     card.checkPassword(user, function (dbError, dbResult) {
       if (dbError) {
@@ -18,21 +22,26 @@ router.post('/', function (request, response) {
         if (dbResult.length > 0) {
           const userData = dbResult[0];
 
-          // 🔹 Kortin lukituslogiikka ryhmäläisesi versiosta
+          // Jos tietokannasta löytyy kortin tiedoilla locked = 1, ilmoitetaan siitä ja palautetaan False1
+
           if (userData.locked) {
             console.log("Kortti lukittu");
             return response.send("False1");
           }
 
+          // Pin koodi on ollut oikein
+
           bcrypt.compare(pass, userData.pin, function (err, compareResult) {
             if (compareResult) {
               console.log("Kirjautuminen onnistui");
 
-              // 🔹 Arvausten nollaus (ryhmäläisesi logiikka)
+              // Arvausten nollataan aina onnistuneen kirjautumisen jälkeen
+
               card.resetTryLeft(user, function () {
                 const token = generateAccessToken({ username: user });
 
-                // 🔹 Haetaan tilitiedot (sinun logiikkasi)
+                // Hakee kortin account_id ja account_typen
+
                 card.getAccounts(user, function (accountError, accountResults) {
                   if (accountError) {
                     console.log("Virhe tilitietoja haettaessa:", accountError);
@@ -40,7 +49,8 @@ router.post('/', function (request, response) {
                   } else {
                     console.log("Tilitiedot:", accountResults);
 
-                    // 🔹 Palautetaan vastaus, joka sisältää sinun toteutuksesi tiedot
+                    // Palautetaan responsena vastaus, joka sisältää json muodossa (token,card_type,fname,lname,message)
+
                     response.json({
                       token: token,
                       card_type: userData.card_type === 'credit' ? 2 : userData.card_type === 'combo' ? 3 : 1,
@@ -54,7 +64,9 @@ router.post('/', function (request, response) {
               });
 
             } else {
-              // 🔹 Väärä PIN ja arvausten vähennys (ryhmäläisesi logiikka)
+
+              // Väärä PIN  koodi syötetty ja jäljellä olevia arvauksia vähennetään
+
               console.log("Väärä PIN");
 
               let remainingTries = userData.try_left - 1;
@@ -84,6 +96,8 @@ router.post('/', function (request, response) {
 
   }
 });
+
+// Tokenin luontiin funktio
 
 function generateAccessToken(username) {
   dotenv.config();

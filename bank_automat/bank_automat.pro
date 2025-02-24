@@ -11,6 +11,7 @@ CONFIG += c++17
 
 SOURCES += \
     balance.cpp \
+    chatbotwindow.cpp \
     enviroment.cpp \
     login.cpp \
     main.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 
 HEADERS += \
     balance.h \
+    chatbotwindow.h \
     enviroment.h \
     login.h \
     mainwindow.h \
@@ -29,6 +31,7 @@ HEADERS += \
     withdrawal.h
 
 FORMS += \
+    chatbotwindow.ui \
     login.ui \
     mainwindow.ui \
     paaikkuna.ui \

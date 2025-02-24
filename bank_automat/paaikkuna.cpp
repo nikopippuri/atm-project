@@ -40,6 +40,15 @@ qDebug() << "Opening Transactions Window with Account ID: " << selectedAccountId
 }
 
 
+void paaikkuna::on_btnArrow1_clicked()
+{
+    ChatBotWindow *chatBotObj = new ChatBotWindow();
+    chatBotObj->show();
+}
+
+
+
+
 void paaikkuna::on_btnwithdraw_clicked()
 {
     withdrawal *withdrawalWindow = new withdrawal(this);
