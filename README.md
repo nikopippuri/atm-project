@@ -67,7 +67,7 @@ This school project simulates a ATM system using modern technologies, including 
 5. Set up and run the Qt application.
 
 ## Usage
-- Launch the Qt application and log in using your card's ID ja enter correct PIN.
+- Launch the Qt application and log in using your card's ID and enter correct PIN.
 - Use the available features to view your balance, withdraw money, and view transaction history.
 
 ## Database ER model
