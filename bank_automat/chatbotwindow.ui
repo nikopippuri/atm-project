@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChatBotWindow</class>
+ <widget class="QWidget" name="ChatBotWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>628</width>
+    <height>691</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-radius: 10px;  
+border: 2px solid #626262;</string>
+  </property>
+  <widget class="QTextEdit" name="chatDisplay">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>99</y>
+     <width>611</width>
+     <height>471</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(231, 255, 254); 
+border-radius: 10px;  
+border: 2px solid rgb(98, 98, 98);
+padding: 5px;  
+color: #6d6d6d;</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sendButton">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>590</y>
+     <width>111</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: orange;
+    color: white; 
+    border-radius: 25px;  
+border: 2px solid rgb(98, 98, 98);
+}
+
+QPushButton:hover {
+    background-color: rgb(173, 115, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string>Lähetä</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="inputField">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>590</y>
+     <width>491</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(226, 226, 226);
+border-radius: 10px;  
+border: 2px solid #626262;
+padding: 5px;  
+color: rgb(109, 109, 109);</string>
+   </property>
+   <property name="placeholderText">
+    <string>Kirjoita kysymyksesi tähän..</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>-20</y>
+     <width>471</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Cooper Black</family>
+     <pointsize>48</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: orange;
+border: 0px </string>
+   </property>
+   <property name="text">
+    <string>Banken OYAB</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

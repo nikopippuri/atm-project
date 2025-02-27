@@ -607,6 +607,28 @@ color: rgb(0, 0, 0);</string>
     <string>Banken OYAB</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_transactions_2">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>150</y>
+     <width>171</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
+   <property name="text">
+    <string>Asiakaspalvelu chat</string>
+   </property>
+  </widget>
   <zorder>label_2</zorder>
   <zorder>btnFetchTransactions</zorder>
   <zorder>btn0</zorder>
@@ -636,6 +658,7 @@ color: rgb(0, 0, 0);</string>
   <zorder>label_transactions</zorder>
   <zorder>labelBalance</zorder>
   <zorder>label</zorder>
+  <zorder>label_transactions_2</zorder>
  </widget>
  <resources/>
  <connections/>

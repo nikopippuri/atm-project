@@ -6,6 +6,7 @@
 #include "transactionsform.h"
 #include "withdrawal.h"
 #include "balance.h"
+#include "chatbotwindow.h"
 
 namespace Ui {
 class paaikkuna;
@@ -43,6 +44,8 @@ private slots:
     void updateBalance(double newBalance);
 
     void showBalanceError(const QString &errorMsg);
+
+    void on_btnArrow1_clicked();
 
 private:
     Ui::paaikkuna *ui;

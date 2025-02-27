@@ -12,8 +12,22 @@ const jwt = require('jsonwebtoken');
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
+
+// chatbot
+
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const chatRouter = require("./routes/chat");
+
+
 const app = express();
 app.use(express.json());
+
+// cors ja bodyparser
+
+app.use(cors());
+app.use(bodyParser.json());
+
 app.use('/api/transactions', transactionRouter);
 
 const withdrawRouter = require('./routes/withdraw');
@@ -60,6 +74,7 @@ apis: ['./routes/*.js'],
 };
 const specs = swaggerJsdoc(options);
 
+app.use("/chat", chatRouter); 
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));;
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
